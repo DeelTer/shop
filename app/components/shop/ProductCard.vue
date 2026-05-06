@@ -17,8 +17,6 @@ const emit = defineEmits<{
   addToCart: [id: string]
 }>()
 
-// True when the backend reported any active promotion AND it actually moves
-// the price — guards against a 0% promotion or an empty array sneaking in.
 const hasDiscount = computed(() =>
   (props.discountPercent ?? 0) > 0
   && props.discountedPrice !== undefined
@@ -54,15 +52,11 @@ const currencySymbol = computed(() => props.currency || '₽')
         />
       </div>
 
-      <!-- Promotion badges. Stacked top-left so the percent jumps out
-           first; the human-readable name(s) follow underneath. -->
+      <!-- Promotion badges -->
       <div
         v-if="hasDiscount"
         class="absolute top-2 left-2 flex flex-col items-start gap-1"
       >
-        <!--        <span class="px-2 py-0.5 rounded-md text-xs font-bold bg-primary text-inverted shadow"> -->
-        <!--          −{{ props.discountPercent }}% -->
-        <!--        </span> -->
         <span
           v-for="promo in props.activePromotions"
           :key="promo.id"

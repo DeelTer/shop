@@ -5,16 +5,11 @@ const settings = useShopSettingsStore()
 const productsStore = useProductsStore()
 const requestUrl = useRequestURL()
 
-// Base SEO (title / description / OG / Twitter / canonical).
 useShopSeo({
   description: settings.description
     || `Купить донат на сервер ${settings.ip || settings.name}: привилегии, предметы, валюта и многое другое. Мгновенная выдача после оплаты.`
 })
 
-// JSON-LD: describe the shop as a `Store` and embed the product catalog as
-// an `OfferCatalog`. Search engines use this for rich-result eligibility
-// and Knowledge Graph hints. Source of truth for the URL is the admin-
-// configured `shopUrl`; live origin is the fallback for fresh installs.
 const currencyCodes = new Set(['RUB', 'USD', 'EUR'])
 
 const jsonLd = computed(() => {

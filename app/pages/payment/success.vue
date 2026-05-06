@@ -78,7 +78,6 @@ async function checkStatus() {
     })
     payment.value = data
 
-    // Stop polling once payment is no longer pending
     if (data.status !== 'pending' && pollInterval) {
       clearInterval(pollInterval)
       pollInterval = null
@@ -92,7 +91,6 @@ async function checkStatus() {
 
 onMounted(() => {
   checkStatus()
-  // Poll every 3 seconds while pending
   pollInterval = setInterval(checkStatus, 3000)
 })
 

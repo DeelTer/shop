@@ -18,9 +18,6 @@ const symbol = computed(() => currencySymbols[props.product.currency] || props.p
 
 const paymentOptionsStore = usePaymentOptionsStore()
 
-// Mirrors the JSON Schema enforced by the backend at POST /payments
-// (see fresh-donate-backend/src/routes/payments/index.ts). Keep in sync.
-// Nickname rules follow Minecraft Java Edition: 3..16 chars of [a-zA-Z0-9_].
 const baseShape = {
   nickname: z.string()
     .min(3, 'Минимум 3 символа')
@@ -74,14 +71,8 @@ watch(paymentMethods, (methods) => {
   }
 }, { immediate: true })
 
-// Privilege products are rank-style: count is forced to 1, the input is
-// hidden, and any upgrade-mode group on the product can drive a server
-// preview ("доплата") in real time as the buyer types their nickname.
 const isPrivilege = computed(() => props.product.type === 'privilege')
 
-// Live preview of the actual charge, debounced server-side. Only kicks in
-// once the buyer types a valid Minecraft nickname; until then we render
-// the static promo-aware price.
 const { preview, loading: previewLoading, error: previewError } = useUpgradePreview(
   () => props.product.id,
   () => state.nickname
@@ -93,11 +84,6 @@ const promoDiscount = computed(() =>
   && props.product.discountedPrice < props.product.price
 )
 
-// Unit price the buyer actually pays. Preference order:
-//   1. preview.finalUnitPrice (post-promo, post-upgrade) — when available.
-//   2. product.discountedPrice (post-promo only) — promo is active but no
-//      preview yet (nickname empty / typing).
-//   3. product.price (sticker).
 const unitPrice = computed(() => {
   if (preview.value && !preview.value.blocked) return preview.value.finalUnitPrice
   if (promoDiscount.value) return props.product.discountedPrice as number
@@ -119,8 +105,6 @@ const totalOriginalPrice = computed(() =>
   Math.round(unitOriginalPrice.value * effectiveCount.value * 100) / 100
 )
 
-// Show the struck-through old price whenever the buyer is paying less than
-// sticker — could be promo, upgrade, or both stacked.
 const hasDiscount = computed(() => unitPrice.value < unitOriginalPrice.value)
 
 const upgradeBlocked = computed(() => preview.value?.blocked === true)
@@ -216,8 +200,7 @@ async function onSubmit() {
             {{ product.name }}
           </h3>
 
-          <!-- Promo badges (when active). Same names the shop card shows,
-               so the buyer sees which campaigns are stacking. -->
+          <!-- Promo badges -->
           <div
             v-if="hasDiscount"
             class="flex flex-wrap gap-1.5 mt-2"
@@ -360,10 +343,7 @@ async function onSubmit() {
               />
             </UFormField>
 
-            <!-- Upgrade-mode preview readout. Three states:
-                 - blocked: red callout, кнопка дизейблится ниже.
-                 - discount: green callout с суммой доплаты.
-                 - clean: ничего не рендерим (preview === null или 0). -->
+            <!-- Upgrade-mode preview readout -->
             <div
               v-if="upgradeBlocked"
               class="flex gap-3 p-3 rounded-lg bg-error/10 border border-error/20 mt-1"
@@ -417,9 +397,7 @@ async function onSubmit() {
               />
               Проверяем цену...
             </p>
-            <!-- previewError тихо игнорируем: лучше показать обычную цену,
-                 чем пугать пользователя сетевой ошибкой preview. Фактическая
-                 проверка всё равно случится при создании платежа. -->
+            <!-- previewError -->
             <span
               v-if="previewError"
               class="hidden"

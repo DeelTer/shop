@@ -1,9 +1,6 @@
 <script setup lang="ts">
 const settings = useShopSettingsStore()
 
-// Site-wide head defaults. Pages that call `useShopSeo` override the title
-// and description; this just sets the language, default suffix, and a base
-// favicon link.
 useHead({
   htmlAttrs: { lang: 'ru' },
   titleTemplate: (chunk?: string) => {

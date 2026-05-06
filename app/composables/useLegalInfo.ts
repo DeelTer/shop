@@ -1,10 +1,5 @@
 /**
- * Shared bindings for the public legal pages (оферта / соглашение / политика).
- *
- * Reads admin-configured owner identity from the shop-settings store and
- * exposes ready-to-render Russian labels. Empty fields fall back to
- * "не указано" so legal pages stay readable on fresh installs where the
- * admin hasn't filled the юр-инфо section yet.
+ * Shared bindings for the public legal pages (offer / privacy / terms).
  */
 export function useLegalInfo() {
   const settings = useShopSettingsStore()
@@ -35,9 +30,6 @@ export function useLegalInfo() {
     (settings.shopUrl || requestUrl.origin).replace(/\/+$/, '')
   )
 
-  // Snapshot the date the user opens the page — these documents don't have
-  // a stored "last edited" timestamp yet, so we surface today's date as the
-  // effective date. Good enough until we wire a real changelog.
   const effectiveDate = computed(() => {
     const d = new Date()
     return d.toLocaleDateString('ru-RU', {
