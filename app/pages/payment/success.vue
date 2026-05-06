@@ -2,6 +2,14 @@
 const route = useRoute()
 const config = useRuntimeConfig()
 
+// Payment-status pages must not be indexed: they're per-user, time-sensitive,
+// and would clutter search results with duplicate content.
+useShopSeo({
+  title: 'Статус платежа',
+  description: 'Проверка статуса вашего платежа.',
+  robots: 'noindex, nofollow'
+})
+
 const paymentId = computed(() => route.query.paymentId as string)
 
 const currencySymbols: Record<string, string> = {
@@ -22,7 +30,7 @@ const payment = ref<PaymentStatus | null>(null)
 const loading = ref(true)
 const error = ref(false)
 
-const statusConfig: Record<string, { icon: string; color: string; title: string; description: string }> = {
+const statusConfig: Record<string, { icon: string, color: string, title: string, description: string }> = {
   delivered: {
     icon: 'i-lucide-check-circle',
     color: 'text-success',
@@ -46,6 +54,12 @@ const statusConfig: Record<string, { icon: string; color: string; title: string;
     color: 'text-error',
     title: 'Платёж не прошёл',
     description: 'Произошла ошибка при оплате. Попробуйте снова.'
+  },
+  expired: {
+    icon: 'i-lucide-clock-alert',
+    color: 'text-muted',
+    title: 'Срок оплаты истёк',
+    description: 'Платёжная сессия закрылась. Создайте новый платёж в магазине.'
   }
 }
 
@@ -64,7 +78,6 @@ async function checkStatus() {
     })
     payment.value = data
 
-    // Stop polling once payment is no longer pending
     if (data.status !== 'pending' && pollInterval) {
       clearInterval(pollInterval)
       pollInterval = null
@@ -78,7 +91,6 @@ async function checkStatus() {
 
 onMounted(() => {
   checkStatus()
-  // Poll every 3 seconds while pending
   pollInterval = setInterval(checkStatus, 3000)
 })
 
@@ -173,7 +185,7 @@ const symbol = computed(() => {
             <span class="text-sm text-muted">Статус</span>
             <UBadge
               :label="currentStatus!.title"
-              :color="payment.status === 'delivered' || payment.status === 'paid' ? 'success' : payment.status === 'failed' ? 'error' : 'warning'"
+              :color="payment.status === 'delivered' || payment.status === 'paid' ? 'success' : payment.status === 'failed' ? 'error' : payment.status === 'expired' ? 'neutral' : 'warning'"
               variant="subtle"
               size="sm"
             />
