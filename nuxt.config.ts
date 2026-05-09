@@ -14,10 +14,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:3001'
-      // Note: the shop's public origin (used for canonical/OG/sitemap) lives
-      // in the database — see `shopUrl` on shop settings, edited from the
-      // admin panel. No env var, single source of truth.
+      apiBase: 'http://localhost:3001',
+      appVersion: process.env.npm_package_version || '0.0.0'
     }
   },
 
