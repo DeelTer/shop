@@ -1,3 +1,5 @@
+import pkg from '../../package.json'
+
 export default defineEventHandler((event) => {
   setResponseHeaders(event, {
     'Access-Control-Allow-Origin': '*'
@@ -5,6 +7,6 @@ export default defineEventHandler((event) => {
 
   return {
     name: 'FreshDonate Shop',
-    version: '1.0.0'
+    version: pkg.version
   }
 })
