@@ -3,6 +3,7 @@ export interface PaymentOptionData {
   name: string
   icon: string
   providerId: string
+  redirectUrl: string | null
   sortOrder: number
   enabled: boolean
 }

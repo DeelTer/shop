@@ -65,6 +65,10 @@ const paymentMethods = computed(() =>
   }))
 )
 
+const selectedOption = computed(() =>
+  paymentOptionsStore.items.find(o => o.id === state.paymentOptionId)
+)
+
 watch(paymentMethods, (methods) => {
   if (methods.length > 0 && !methods.find(m => m.id === state.paymentOptionId)) {
     state.paymentOptionId = methods[0]!.id
@@ -130,12 +134,35 @@ const purchasing = ref(false)
 const purchaseResult = ref<{ status: string, id: string } | null>(null)
 const purchaseError = ref('')
 
+function renderRedirectUrl(template: string): string {
+  const values: Record<string, string | number> = {
+    nickname: state.nickname,
+    email: state.email,
+    amount: totalPrice.value,
+    price: unitPrice.value,
+    currency: props.product.currency,
+    product: props.product.name,
+    productId: props.product.id,
+    count: effectiveCount.value
+  }
+  return template.replace(/\{(\w+)}/g, (match, key: string) => {
+    const value = values[key]
+    return value === undefined ? match : encodeURIComponent(String(value))
+  })
+}
+
 async function onSubmit() {
   purchasing.value = true
   purchaseError.value = ''
   purchaseResult.value = null
 
   try {
+    const option = selectedOption.value
+    if (option?.redirectUrl) {
+      window.location.href = renderRedirectUrl(option.redirectUrl)
+      return
+    }
+
     const result = await $fetch<{ id: string, status: string, externalPaymentUrl: string | null }>('/payments', {
       baseURL: config.public.apiBase as string,
       method: 'POST',
