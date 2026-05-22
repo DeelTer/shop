@@ -1,3 +1,5 @@
+import type { SupportedCurrency, CurrencyRates } from '~/stores/shopSettings'
+
 export default defineNuxtPlugin(async () => {
   const config = useRuntimeConfig()
   const settings = useShopSettingsStore()
@@ -14,6 +16,8 @@ export default defineNuxtPlugin(async () => {
       ownerType: '' | 'individual' | 'self_employed' | 'sole_proprietor' | 'legal_entity'
       ownerInn: string
       contactEmail: string
+      baseCurrency?: SupportedCurrency
+      currencyRates?: CurrencyRates
     }>('/shop-settings', {
       baseURL: config.public.apiBase as string
     })

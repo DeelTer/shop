@@ -1,4 +1,6 @@
 export type OwnerType = '' | 'individual' | 'self_employed' | 'sole_proprietor' | 'legal_entity'
+export type SupportedCurrency = 'RUB' | 'USD' | 'EUR'
+export type CurrencyRates = Partial<Record<SupportedCurrency, number>>
 
 interface ShopSettingsData {
   name: string
@@ -10,6 +12,8 @@ interface ShopSettingsData {
   ownerType: OwnerType
   ownerInn: string
   contactEmail: string
+  baseCurrency?: SupportedCurrency
+  currencyRates?: CurrencyRates
 }
 
 export const useShopSettingsStore = defineStore('shopSettings', () => {
@@ -22,6 +26,8 @@ export const useShopSettingsStore = defineStore('shopSettings', () => {
   const ownerType = ref<OwnerType>('')
   const ownerInn = ref('')
   const contactEmail = ref('')
+  const baseCurrency = ref<SupportedCurrency>('RUB')
+  const currencyRates = ref<CurrencyRates>({ USD: 95, EUR: 100 })
 
   function apply(data: ShopSettingsData) {
     name.value = data.name
@@ -33,6 +39,8 @@ export const useShopSettingsStore = defineStore('shopSettings', () => {
     ownerType.value = (data.ownerType || '') as OwnerType
     ownerInn.value = data.ownerInn || ''
     contactEmail.value = data.contactEmail || ''
+    if (data.baseCurrency) baseCurrency.value = data.baseCurrency
+    if (data.currencyRates) currencyRates.value = data.currencyRates
   }
 
   return {
@@ -45,6 +53,8 @@ export const useShopSettingsStore = defineStore('shopSettings', () => {
     ownerType,
     ownerInn,
     contactEmail,
+    baseCurrency,
+    currencyRates,
     apply
   }
 })

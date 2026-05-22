@@ -55,12 +55,6 @@ const selectedCategory = ref('all')
 const purchaseOpen = ref(false)
 const purchaseProduct = ref<Product | null>(null)
 
-const currencySymbols: Record<string, string> = {
-  RUB: '₽',
-  USD: '$',
-  EUR: '€'
-}
-
 const typeLabels: Record<string, string> = {
   item: 'Предметы',
   privilege: 'Привилегии',
@@ -133,7 +127,7 @@ function openPurchase(productId: string) {
         :name="product.name"
         :price="product.price"
         :quantity="product.quantity"
-        :currency="currencySymbols[product.currency] || product.currency"
+        :currency="product.currency"
         :image-url="product.imageUrl"
         :active-promotions="product.activePromotions"
         :discount-percent="product.discountPercent"
