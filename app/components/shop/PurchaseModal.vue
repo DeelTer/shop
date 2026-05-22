@@ -8,13 +8,13 @@ const props = defineProps<{
 
 const open = defineModel<boolean>('open', { default: false })
 
-const currencySymbols: Record<string, string> = {
-  RUB: '₽',
-  USD: '$',
-  EUR: '€'
-}
+const { display: displayPrice, displayCurrency, format } = useCurrency()
 
-const symbol = computed(() => currencySymbols[props.product.currency] || props.product.currency)
+const showNative = computed(() => displayCurrency.value !== props.product.currency)
+
+function formatNative(amount: number): string {
+  return format(amount, props.product.currency as 'RUB' | 'USD' | 'EUR')
+}
 
 const paymentOptionsStore = usePaymentOptionsStore()
 
@@ -246,16 +246,22 @@ async function onSubmit() {
 
           <div class="flex items-baseline gap-1.5 mt-2">
             <span class="text-xl font-bold text-primary tabular-nums">
-              {{ unitPrice.toLocaleString() }}{{ symbol }}
+              {{ displayPrice(unitPrice, product.currency) }}
             </span>
             <span
               v-if="hasDiscount"
               class="text-sm text-muted line-through tabular-nums"
             >
-              {{ unitOriginalPrice.toLocaleString() }}{{ symbol }}
+              {{ displayPrice(unitOriginalPrice, product.currency) }}
             </span>
             <span class="text-sm text-muted">/ {{ product.quantity }} {{ quantitySuffix[product.type] || 'шт.' }}</span>
           </div>
+          <p
+            v-if="showNative"
+            class="text-xs text-muted mt-1.5"
+          >
+            Оплата спишется в {{ product.currency }} ({{ formatNative(unitPrice) }})
+          </p>
 
           <div class="flex items-center gap-1.5 mt-2 text-sm text-muted">
             <UIcon
@@ -293,15 +299,23 @@ async function onSubmit() {
           <!-- Total -->
           <div class="flex items-center justify-between mb-4">
             <span class="font-semibold">Итого:</span>
-            <div class="flex items-baseline gap-2">
+            <div class="flex flex-col items-end">
+              <div class="flex items-baseline gap-2">
+                <span
+                  v-if="hasDiscount"
+                  class="text-sm text-muted line-through tabular-nums"
+                >
+                  {{ displayPrice(totalOriginalPrice, product.currency) }}
+                </span>
+                <span class="text-xl font-bold text-primary tabular-nums">
+                  {{ displayPrice(totalPrice, product.currency) }}
+                </span>
+              </div>
               <span
-                v-if="hasDiscount"
-                class="text-sm text-muted line-through tabular-nums"
+                v-if="showNative"
+                class="text-xs text-muted tabular-nums mt-0.5"
               >
-                {{ totalOriginalPrice.toLocaleString() }}{{ symbol }}
-              </span>
-              <span class="text-xl font-bold text-primary tabular-nums">
-                {{ totalPrice.toLocaleString() }}{{ symbol }}
+                ≈ {{ formatNative(totalPrice) }} к оплате
               </span>
             </div>
           </div>
@@ -404,7 +418,7 @@ async function onSubmit() {
               />
               <div>
                 <p class="text-sm font-medium text-success">
-                  Доплата −{{ upgradeDiscount.toLocaleString() }}{{ symbol }}
+                  Доплата −{{ displayPrice(upgradeDiscount, product.currency) }}
                 </p>
                 <p class="text-xs text-muted mt-0.5">
                   <template v-if="preview?.reference">

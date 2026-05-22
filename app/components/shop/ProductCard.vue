@@ -6,7 +6,7 @@ const props = defineProps<{
   name: string
   price: number
   quantity: number
-  currency?: string
+  currency: string
   imageUrl?: string
   activePromotions?: ProductPromotion[]
   discountPercent?: number
@@ -16,6 +16,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   addToCart: [id: string]
 }>()
+
+const { display } = useCurrency()
 
 const hasDiscount = computed(() =>
   (props.discountPercent ?? 0) > 0
@@ -27,7 +29,8 @@ const finalPrice = computed(() =>
   hasDiscount.value ? (props.discountedPrice as number) : props.price
 )
 
-const currencySymbol = computed(() => props.currency || '₽')
+const finalPriceFormatted = computed(() => display(finalPrice.value, props.currency))
+const originalPriceFormatted = computed(() => display(props.price, props.currency))
 </script>
 
 <template>
@@ -75,13 +78,13 @@ const currencySymbol = computed(() => props.currency || '₽')
       <div class="flex items-center justify-between mt-2">
         <div class="flex items-baseline gap-1.5 min-w-0">
           <span class="text-lg font-bold text-primary tabular-nums">
-            {{ finalPrice.toLocaleString() }}{{ currencySymbol }}
+            {{ finalPriceFormatted }}
           </span>
           <span
             v-if="hasDiscount"
             class="text-xs text-muted line-through tabular-nums"
           >
-            {{ props.price.toLocaleString() }}{{ currencySymbol }}
+            {{ originalPriceFormatted }}
           </span>
           <span class="text-xs text-muted shrink-0">/ {{ props.quantity }} шт.</span>
         </div>

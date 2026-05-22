@@ -45,7 +45,9 @@ const navLinks: navLink[] = []
           </nav>
 
           <!-- Right side -->
-          <div class="flex items-center gap-2" />
+          <div class="flex items-center gap-2">
+            <ShopCurrencySwitcher />
+          </div>
         </div>
       </div>
     </header>
