@@ -108,9 +108,9 @@ const navLinks: navLink[] = []
         <div class="border-t border-default py-4 text-center text-sm text-muted">
           <p>&copy; {{ new Date().getFullYear() }} {{ settings.name }}. Все права защищены.</p>
           <p class="mt-1">
-            Сайт создан с помощью
+            Сайт создан
             <NuxtLink
-              to="https://github.com/Fresh-Donate"
+              to="https://fd.zaralx.ru"
               target="_blank"
               class="text-primary hover:underline"
             >
