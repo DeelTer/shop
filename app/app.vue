@@ -12,6 +12,9 @@ useHead({
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
   ]
 })
+
+const colorMode = useColorMode()
+colorMode.preference = 'dark'
 </script>
 
 <template>
