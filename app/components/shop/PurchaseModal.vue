@@ -49,13 +49,29 @@ interface FormState {
   termsAccepted: boolean
 }
 
+const profile = useBuyerProfile()
+
 const state = reactive<FormState>({
-  nickname: '',
-  email: '',
-  paymentOptionId: '',
+  nickname: profile.value.nickname,
+  email: profile.value.email,
+  paymentOptionId: profile.value.paymentOptionId,
   count: 1,
   termsAccepted: false
 })
+
+watch(open, (isOpen) => {
+  if (!isOpen) return
+  if (profile.value.nickname) state.nickname = profile.value.nickname
+  if (profile.value.email) state.email = profile.value.email
+  if (profile.value.paymentOptionId) state.paymentOptionId = profile.value.paymentOptionId
+})
+
+watch(
+  () => [state.nickname, state.email, state.paymentOptionId] as const,
+  ([nickname, email, paymentOptionId]) => {
+    profile.value = { nickname, email, paymentOptionId }
+  }
+)
 
 const paymentMethods = computed(() =>
   paymentOptionsStore.items.map(o => ({
