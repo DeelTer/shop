@@ -49,13 +49,29 @@ interface FormState {
   termsAccepted: boolean
 }
 
+const profile = useBuyerProfile()
+
 const state = reactive<FormState>({
-  nickname: '',
-  email: '',
-  paymentOptionId: '',
+  nickname: profile.value.nickname,
+  email: profile.value.email,
+  paymentOptionId: profile.value.paymentOptionId,
   count: 1,
   termsAccepted: false
 })
+
+watch(open, (isOpen) => {
+  if (!isOpen) return
+  if (profile.value.nickname) state.nickname = profile.value.nickname
+  if (profile.value.email) state.email = profile.value.email
+  if (profile.value.paymentOptionId) state.paymentOptionId = profile.value.paymentOptionId
+})
+
+watch(
+  () => [state.nickname, state.email, state.paymentOptionId] as const,
+  ([nickname, email, paymentOptionId]) => {
+    profile.value = { nickname, email, paymentOptionId }
+  }
+)
 
 const paymentMethods = computed(() =>
   paymentOptionsStore.items.map(o => ({
@@ -399,7 +415,7 @@ async function onSubmit() {
                 </p>
                 <p class="text-xs text-muted mt-0.5">
                   <template v-if="preview?.reference">
-                    На никнейме «{{ state.nickname }}» уже есть «{{ preview.reference.productName }}» из этой группы — выберите более дорогой товар.
+                    На никнейме "{{ state.nickname }}" уже есть "{{ preview.reference.productName }}" из этой группы — выберите более дорогой товар.
                   </template>
                   <template v-else>
                     На этом нике уже куплен товар из этой группы.
@@ -422,7 +438,7 @@ async function onSubmit() {
                 </p>
                 <p class="text-xs text-muted mt-0.5">
                   <template v-if="preview?.reference">
-                    Учтена стоимость «{{ preview.reference.productName }}» — вы уже владеете этой позицией.
+                    Учтена стоимость "{{ preview.reference.productName }}" — вы уже владеете этой позицией.
                   </template>
                 </p>
               </div>

@@ -12,6 +12,12 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  colorMode: {
+    preference: 'dark',
+    fallback: 'dark',
+    classSuffix: ''
+  },
+
   runtimeConfig: {
     public: {
       apiBase: 'http://localhost:3001',
