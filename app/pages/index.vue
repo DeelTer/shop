@@ -132,6 +132,7 @@ function openPurchase(productId: string) {
         :active-promotions="product.activePromotions"
         :discount-percent="product.discountPercent"
         :discounted-price="product.discountedPrice"
+        :servers="product.servers"
         @add-to-cart="openPurchase"
       />
     </div>

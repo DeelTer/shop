@@ -292,6 +292,34 @@ async function onSubmit() {
           >
             {{ product.description }}
           </p>
+
+          <div
+            v-if="product.servers && product.servers.length > 0"
+            class="mt-3"
+          >
+            <p class="text-xs font-medium text-muted mb-1.5">
+              Сервера выдачи
+            </p>
+            <div class="flex flex-wrap gap-1.5">
+              <span
+                v-for="srv in product.servers"
+                :key="srv.id"
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-elevated text-default border border-default"
+              >
+                <UIcon
+                  name="i-lucide-server"
+                  class="size-3.5 text-primary"
+                />
+                {{ srv.name }}
+              </span>
+            </div>
+            <p
+              v-if="product.servers.length > 1"
+              class="text-[11px] text-muted mt-1.5"
+            >
+              Товар будет выдан на каждом из перечисленных серверов.
+            </p>
+          </div>
         </div>
 
         <!-- Right: Purchase Form -->
