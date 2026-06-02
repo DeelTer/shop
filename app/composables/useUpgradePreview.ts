@@ -30,7 +30,7 @@ const NICKNAME_MIN = 3
 const NICKNAME_RE = /^[a-zA-Z0-9_]{3,16}$/
 
 export function useUpgradePreview(productId: MaybeRefOrGetter<string>, nickname: MaybeRefOrGetter<string>) {
-  const config = useRuntimeConfig()
+  const $api = useNuxtApp().$api as typeof $fetch
 
   const preview = ref<UpgradePreview | null>(null)
   const loading = ref(false)
@@ -43,10 +43,6 @@ export function useUpgradePreview(productId: MaybeRefOrGetter<string>, nickname:
     const pid = toValue(productId)
     const nick = (toValue(nickname) || '').trim()
 
-    // Don't bother the backend until the buyer has typed something
-    // resembling a real Minecraft nickname — anything shorter is
-    // guaranteed to come back with no upgrade context, so a noop render is
-    // fine and saves a round-trip per keystroke.
     if (!pid || nick.length < NICKNAME_MIN || !NICKNAME_RE.test(nick)) {
       preview.value = null
       error.value = null
@@ -60,8 +56,7 @@ export function useUpgradePreview(productId: MaybeRefOrGetter<string>, nickname:
     error.value = null
 
     try {
-      preview.value = await $fetch<UpgradePreview>('/payments/preview', {
-        baseURL: config.public.apiBase as string,
+      preview.value = await $api<UpgradePreview>('/payments/preview', {
         method: 'POST',
         body: { productId: pid, nickname: nick },
         signal: abort.signal

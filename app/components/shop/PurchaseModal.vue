@@ -145,7 +145,7 @@ const quantitySuffix: Record<string, string> = {
   other: 'шт.'
 }
 
-const config = useRuntimeConfig()
+const $api = useNuxtApp().$api as typeof $fetch
 const purchasing = ref(false)
 const purchaseResult = ref<{ status: string, id: string } | null>(null)
 const purchaseError = ref('')
@@ -179,8 +179,7 @@ async function onSubmit() {
       return
     }
 
-    const result = await $fetch<{ id: string, status: string, externalPaymentUrl: string | null }>('/payments', {
-      baseURL: config.public.apiBase as string,
+    const result = await $api<{ id: string, status: string, externalPaymentUrl: string | null }>('/payments', {
       method: 'POST',
       body: {
         productId: props.product.id,

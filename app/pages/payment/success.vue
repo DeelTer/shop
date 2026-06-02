@@ -1,9 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
-const config = useRuntimeConfig()
+const $api = useNuxtApp().$api as typeof $fetch
 
-// Payment-status pages must not be indexed: they're per-user, time-sensitive,
-// and would clutter search results with duplicate content.
 useShopSeo({
   title: 'Статус платежа',
   description: 'Проверка статуса вашего платежа.',
@@ -73,9 +71,7 @@ async function checkStatus() {
   }
 
   try {
-    const data = await $fetch<PaymentStatus>(`/payments/${paymentId.value}/status`, {
-      baseURL: config.public.apiBase as string
-    })
+    const data = await $api<PaymentStatus>(`/payments/${paymentId.value}/status`)
     payment.value = data
 
     if (data.status !== 'pending' && pollInterval) {
