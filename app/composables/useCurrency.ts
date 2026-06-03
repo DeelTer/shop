@@ -35,7 +35,7 @@ export function useCurrency() {
   /**
    * Locale-aware formatting: rounds RUB to whole units, keeps USD/EUR at 2 dp.
    * Explicit locale per currency so SSR (Node default) and CSR (browser)
-   * produce byte-identical strings — needed to avoid hydration mismatches.
+   * produce byte-identical strings - needed to avoid hydration mismatches.
    */
   function format(amount: number, code?: SupportedCurrency): string {
     const target = code || currency.display

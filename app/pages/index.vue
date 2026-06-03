@@ -36,7 +36,7 @@ const jsonLd = computed(() => {
     'image': `${siteUrl}/og-image.png`,
     'hasOfferCatalog': {
       '@type': 'OfferCatalog',
-      'name': `${settings.name} — товары`,
+      'name': `${settings.name} - товары`,
       'itemListElement': offers
     }
   }

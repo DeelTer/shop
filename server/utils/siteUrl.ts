@@ -22,7 +22,7 @@ export async function resolveSiteUrl(event: H3Event): Promise<string> {
     })
     shopUrl = (data?.shopUrl || '').trim()
   } catch {
-    // Backend unreachable — fall through to request-origin fallback.
+    // Backend unreachable - fall through to request-origin fallback.
   }
 
   if (!shopUrl) {

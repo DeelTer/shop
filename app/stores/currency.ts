@@ -15,7 +15,7 @@ function isSupported(code: string | null | undefined): code is SupportedCurrency
 }
 
 // Best-effort guess of which display currency a visitor expects. Runs on the
-// client only — SSR uses the base currency until hydration so SSR/CSR render
+// client only - SSR uses the base currency until hydration so SSR/CSR render
 // matches without leaking server-side IP geo.
 function detectFromBrowser(): SupportedCurrency | null {
   if (typeof navigator === 'undefined') return null
@@ -47,7 +47,7 @@ function detectFromBrowser(): SupportedCurrency | null {
 export const useCurrencyStore = defineStore('currency', () => {
   const settings = useShopSettingsStore()
 
-  // Backed by a cookie so SSR and the first client paint always agree —
+  // Backed by a cookie so SSR and the first client paint always agree -
   // avoids the hydration mismatch you'd get from reading localStorage or
   // navigator post-hydration. Geo detection writes the cookie once on the
   // client, after which subsequent renders are stable.

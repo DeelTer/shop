@@ -1,14 +1,14 @@
 /**
- * Reactive wrapper around `POST /payments/preview` — debounces nickname
+ * Reactive wrapper around `POST /payments/preview` - debounces nickname
  * changes so the buyer can type freely without spamming the backend, and
  * exposes the resolved upgrade-pricing evaluation for the modal to render.
  *
  * Returns:
- *  - `preview` — latest evaluation, or null when nickname is too short to
+ *  - `preview` - latest evaluation, or null when nickname is too short to
  *    bother asking the server.
- *  - `loading` — true while a request is in flight (UI shows a subtle
+ *  - `loading` - true while a request is in flight (UI shows a subtle
  *    spinner).
- *  - `error` — non-null when the request itself failed (network, 5xx). A
+ *  - `error` - non-null when the request itself failed (network, 5xx). A
  *    legitimate "blocked" answer is NOT an error; it's a successful
  *    evaluation with `blocked: true`.
  */

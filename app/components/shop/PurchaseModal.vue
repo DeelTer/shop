@@ -442,7 +442,7 @@ async function onSubmit() {
                 </p>
                 <p class="text-xs text-muted mt-0.5">
                   <template v-if="preview?.reference">
-                    На никнейме "{{ state.nickname }}" уже есть "{{ preview.reference.productName }}" из этой группы — выберите более дорогой товар.
+                    На никнейме "{{ state.nickname }}" уже есть "{{ preview.reference.productName }}" из этой группы - выберите более дорогой товар.
                   </template>
                   <template v-else>
                     На этом нике уже куплен товар из этой группы.
@@ -465,7 +465,7 @@ async function onSubmit() {
                 </p>
                 <p class="text-xs text-muted mt-0.5">
                   <template v-if="preview?.reference">
-                    Учтена стоимость "{{ preview.reference.productName }}" — вы уже владеете этой позицией.
+                    Учтена стоимость "{{ preview.reference.productName }}" - вы уже владеете этой позицией.
                   </template>
                 </p>
               </div>
