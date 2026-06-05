@@ -12,6 +12,7 @@ interface ShopSettingsData {
   ownerType: OwnerType
   ownerInn: string
   contactEmail: string
+  cartEnabled?: boolean
   baseCurrency?: SupportedCurrency
   currencyRates?: CurrencyRates
 }
@@ -26,6 +27,7 @@ export const useShopSettingsStore = defineStore('shopSettings', () => {
   const ownerType = ref<OwnerType>('')
   const ownerInn = ref('')
   const contactEmail = ref('')
+  const cartEnabled = ref(false)
   const baseCurrency = ref<SupportedCurrency>('RUB')
   const currencyRates = ref<CurrencyRates>({ USD: 95, EUR: 100 })
 
@@ -39,6 +41,7 @@ export const useShopSettingsStore = defineStore('shopSettings', () => {
     ownerType.value = (data.ownerType || '') as OwnerType
     ownerInn.value = data.ownerInn || ''
     contactEmail.value = data.contactEmail || ''
+    cartEnabled.value = data.cartEnabled ?? false
     if (data.baseCurrency) baseCurrency.value = data.baseCurrency
     if (data.currencyRates) currencyRates.value = data.currencyRates
   }
@@ -53,6 +56,7 @@ export const useShopSettingsStore = defineStore('shopSettings', () => {
     ownerType,
     ownerInn,
     contactEmail,
+    cartEnabled,
     baseCurrency,
     currencyRates,
     apply

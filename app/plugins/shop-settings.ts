@@ -10,12 +10,13 @@ interface ShopSettingsData {
   ownerType: '' | 'individual' | 'self_employed' | 'sole_proprietor' | 'legal_entity'
   ownerInn: string
   contactEmail: string
+  cartEnabled?: boolean
   baseCurrency?: SupportedCurrency
   currencyRates?: CurrencyRates
 }
 
 const CACHE_TTL = 30_000
-let cached: { value: ShopSettingsData; expires: number } | null = null
+let cached: { value: ShopSettingsData, expires: number } | null = null
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   const settings = useShopSettingsStore()

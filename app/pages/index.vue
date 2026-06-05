@@ -3,7 +3,13 @@ import type { Product } from '~/stores/products'
 
 const settings = useShopSettingsStore()
 const productsStore = useProductsStore()
+const cart = useCartStore()
+const toast = useToast()
 const requestUrl = useRequestURL()
+
+onMounted(() => {
+  if (settings.cartEnabled) cart.reconcile(productsStore.items)
+})
 
 useShopSeo({
   description: settings.description
@@ -82,6 +88,41 @@ function openPurchase(productId: string) {
   purchaseProduct.value = product
   purchaseOpen.value = true
 }
+
+// Card button: add to cart when the cart feature is on, otherwise fall back to
+// the original one-click purchase modal.
+function onProductAction(productId: string) {
+  if (!settings.cartEnabled) {
+    openPurchase(productId)
+    return
+  }
+  const product = productsStore.items.find(p => p.id === productId)
+  if (!product) return
+
+  const result = cart.addItem(product)
+  if (result.ok) {
+    toast.add({
+      title: 'Добавлено в корзину',
+      description: product.name,
+      icon: 'i-lucide-shopping-cart',
+      color: 'success'
+    })
+  } else if (result.reason === 'currency') {
+    toast.add({
+      title: 'Другая валюта',
+      description: 'В корзине уже есть товары в другой валюте. Очистите её, чтобы добавить этот товар.',
+      icon: 'i-lucide-triangle-alert',
+      color: 'warning'
+    })
+  } else {
+    toast.add({
+      title: 'Корзина заполнена',
+      description: 'Можно добавить не больше 20 товаров.',
+      icon: 'i-lucide-triangle-alert',
+      color: 'warning'
+    })
+  }
+}
 </script>
 
 <template>
@@ -133,7 +174,8 @@ function openPurchase(productId: string) {
         :discount-percent="product.discountPercent"
         :discounted-price="product.discountedPrice"
         :servers="product.servers"
-        @add-to-cart="openPurchase"
+        :cart-mode="settings.cartEnabled"
+        @add-to-cart="onProductAction"
       />
     </div>
 

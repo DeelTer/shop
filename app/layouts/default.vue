@@ -9,6 +9,13 @@ interface navLink {
 }
 
 const navLinks: navLink[] = []
+
+const cartOpen = ref(false)
+const checkoutOpen = ref(false)
+
+function openCheckout() {
+  checkoutOpen.value = true
+}
 </script>
 
 <template>
@@ -47,6 +54,29 @@ const navLinks: navLink[] = []
           <!-- Right side -->
           <div class="flex items-center gap-2">
             <ShopCurrencySwitcher />
+            <!-- ClientOnly: cart count comes from localStorage, so SSR would
+                 render 0 and mismatch the hydrated value. -->
+            <ClientOnly v-if="settings.cartEnabled">
+              <UButton
+                variant="ghost"
+                color="neutral"
+                square
+                aria-label="Корзина"
+                @click="cartOpen = true"
+              >
+                <UChip
+                  :text="cart.totalItems"
+                  :show="cart.totalItems > 0"
+                  size="2xl"
+                  color="primary"
+                >
+                  <UIcon
+                    name="i-lucide-shopping-cart"
+                    class="size-5"
+                  />
+                </UChip>
+              </UButton>
+            </ClientOnly>
           </div>
         </div>
       </div>
@@ -56,6 +86,15 @@ const navLinks: navLink[] = []
     <main class="flex-1">
       <slot />
     </main>
+
+    <!-- Cart (opt-in) -->
+    <template v-if="settings.cartEnabled">
+      <ShopCartDrawer
+        v-model:open="cartOpen"
+        @checkout="openCheckout"
+      />
+      <ShopCheckoutModal v-model:open="checkoutOpen" />
+    </template>
 
     <!-- Footer -->
     <footer class="border-t border-default">

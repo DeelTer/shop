@@ -12,6 +12,7 @@ const props = defineProps<{
   discountPercent?: number
   discountedPrice?: number
   servers?: ProductServer[]
+  cartMode?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -110,6 +111,7 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
           icon="i-lucide-shopping-cart"
           size="sm"
           square
+          :aria-label="props.cartMode ? 'В корзину' : 'Купить'"
           @click="emit('addToCart', props.id)"
         />
       </div>
