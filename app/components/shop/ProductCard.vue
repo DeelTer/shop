@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProductPromotion } from '~/stores/products'
+import type { ProductPromotion, ProductServer } from '~/stores/products'
 
 const props = defineProps<{
   id: string
@@ -11,6 +11,8 @@ const props = defineProps<{
   activePromotions?: ProductPromotion[]
   discountPercent?: number
   discountedPrice?: number
+  servers?: ProductServer[]
+  cartMode?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -75,6 +77,23 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
       <h3 class="font-bold truncate">
         {{ props.name }}
       </h3>
+      <div
+        v-if="props.servers && props.servers.length > 0"
+        class="flex flex-wrap gap-1 mt-1.5"
+      >
+        <span
+          v-for="srv in props.servers"
+          :key="srv.id"
+          class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-elevated text-muted border border-default"
+          :title="`Выдача на сервере: ${srv.name}`"
+        >
+          <UIcon
+            name="i-lucide-server"
+            class="size-3"
+          />
+          {{ srv.name }}
+        </span>
+      </div>
       <div class="flex items-center justify-between mt-2">
         <div class="flex items-baseline gap-1.5 min-w-0">
           <span class="text-lg font-bold text-primary tabular-nums">
@@ -92,6 +111,7 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
           icon="i-lucide-shopping-cart"
           size="sm"
           square
+          :aria-label="props.cartMode ? 'В корзину' : 'Купить'"
           @click="emit('addToCart', props.id)"
         />
       </div>

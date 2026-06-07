@@ -10,6 +10,11 @@ export interface ProductGroup {
   upgradeMode: boolean
 }
 
+export interface ProductServer {
+  id: string
+  name: string
+}
+
 export interface Product {
   id: string
   name: string
@@ -25,6 +30,7 @@ export interface Product {
   discountPercent?: number
   discountedPrice?: number
   groups?: ProductGroup[]
+  servers?: ProductServer[]
   createdAt: string
   updatedAt: string
 }

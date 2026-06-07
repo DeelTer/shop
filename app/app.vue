@@ -6,7 +6,7 @@ useHead({
   titleTemplate: (chunk?: string) => {
     const name = settings.name || 'FreshDonate Shop'
     if (!chunk || chunk === name) return name
-    return `${chunk} — ${name}`
+    return `${chunk} - ${name}`
   },
   link: [
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

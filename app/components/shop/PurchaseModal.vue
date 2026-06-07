@@ -145,7 +145,7 @@ const quantitySuffix: Record<string, string> = {
   other: 'шт.'
 }
 
-const config = useRuntimeConfig()
+const $api = useNuxtApp().$api as typeof $fetch
 const purchasing = ref(false)
 const purchaseResult = ref<{ status: string, id: string } | null>(null)
 const purchaseError = ref('')
@@ -179,8 +179,7 @@ async function onSubmit() {
       return
     }
 
-    const result = await $fetch<{ id: string, status: string, externalPaymentUrl: string | null }>('/payments', {
-      baseURL: config.public.apiBase as string,
+    const result = await $api<{ id: string, status: string, externalPaymentUrl: string | null }>('/payments', {
       method: 'POST',
       body: {
         productId: props.product.id,
@@ -293,6 +292,34 @@ async function onSubmit() {
           >
             {{ product.description }}
           </p>
+
+          <div
+            v-if="product.servers && product.servers.length > 0"
+            class="mt-3"
+          >
+            <p class="text-xs font-medium text-muted mb-1.5">
+              Сервера выдачи
+            </p>
+            <div class="flex flex-wrap gap-1.5">
+              <span
+                v-for="srv in product.servers"
+                :key="srv.id"
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-elevated text-default border border-default"
+              >
+                <UIcon
+                  name="i-lucide-server"
+                  class="size-3.5 text-primary"
+                />
+                {{ srv.name }}
+              </span>
+            </div>
+            <p
+              v-if="product.servers.length > 1"
+              class="text-[11px] text-muted mt-1.5"
+            >
+              Товар будет выдан на каждом из перечисленных серверов.
+            </p>
+          </div>
         </div>
 
         <!-- Right: Purchase Form -->
@@ -415,7 +442,7 @@ async function onSubmit() {
                 </p>
                 <p class="text-xs text-muted mt-0.5">
                   <template v-if="preview?.reference">
-                    На никнейме "{{ state.nickname }}" уже есть "{{ preview.reference.productName }}" из этой группы — выберите более дорогой товар.
+                    На никнейме "{{ state.nickname }}" уже есть "{{ preview.reference.productName }}" из этой группы - выберите более дорогой товар.
                   </template>
                   <template v-else>
                     На этом нике уже куплен товар из этой группы.
@@ -438,7 +465,7 @@ async function onSubmit() {
                 </p>
                 <p class="text-xs text-muted mt-0.5">
                   <template v-if="preview?.reference">
-                    Учтена стоимость "{{ preview.reference.productName }}" — вы уже владеете этой позицией.
+                    Учтена стоимость "{{ preview.reference.productName }}" - вы уже владеете этой позицией.
                   </template>
                 </p>
               </div>

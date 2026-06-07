@@ -2,7 +2,7 @@
  * Dynamic sitemap.xml.
  *
  * The shop currently has a single indexable route (the storefront `/`).
- * Payment status pages are deliberately excluded — they're per-user and
+ * Payment status pages are deliberately excluded - they're per-user and
  * already marked `noindex`. If new public pages are added, list them here.
  */
 export default defineEventHandler(async (event) => {

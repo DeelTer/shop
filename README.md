@@ -1,4 +1,4 @@
-# FreshDonate — Shop
+# FreshDonate - Shop
 
 > Public storefront where players browse donations and pay.
 
@@ -9,7 +9,7 @@ See also: [Backend](https://github.com/Fresh-Donate/backend) · [Admin Panel](ht
 
 ## About FreshDonate
 
-FreshDonate is a self‑hosted donation system for Minecraft servers. It lets you sell ranks, items, currency and any other in‑game goods through your own storefront, accept payments via multiple providers, and deliver purchases to players automatically the next time they are online — without any third‑party commission or lock‑in.
+FreshDonate is a self‑hosted donation system for Minecraft servers. It lets you sell ranks, items, currency and any other in‑game goods through your own storefront, accept payments via multiple providers, and deliver purchases to players automatically the next time they are online - without any third‑party commission or lock‑in.
 
 The platform is split into four repositories:
 
@@ -29,11 +29,11 @@ The shop is the customer‑facing part of FreshDonate. Players:
 - pick a payment method and are redirected to the gateway;
 - return to the success / failure page and wait for in‑game delivery.
 
-All business logic (pricing, availability, payment creation) lives in the backend — the shop is a thin, fast, SEO‑friendly Nuxt app.
+All business logic (pricing, availability, payment creation) lives in the backend - the shop is a thin, fast, SEO‑friendly Nuxt app.
 
 ## Tech stack
 
-- **Nuxt 4** (Vue 3) — SSR / SSG
+- **Nuxt 4** (Vue 3) - SSR / SSG
 - **Nuxt UI 4** + **Tailwind CSS 4**
 - **Pinia** for client state
 - **@nuxt/icon**, **@nuxt/image** for assets
@@ -51,7 +51,7 @@ npm install
 npm run dev
 ```
 
-By default the shop runs on `http://localhost:3002` and expects the backend on `http://localhost:3001`. Override via environment variables (`NUXT_PUBLIC_API_BASE` etc. — see `nuxt.config.ts`).
+By default the shop runs on `http://localhost:3002` and expects the backend on `http://localhost:3001`. Override via environment variables (`NUXT_PUBLIC_API_BASE` etc. - see `nuxt.config.ts`).
 
 ## Build / production
 
@@ -99,9 +99,9 @@ server/          Nuxt server routes (if any)
 
 ## Related repositories
 
-- [fresh-donate-backend](https://github.com/Fresh-Donate/backend) — REST API this shop talks to
-- [fresh-donate-panel](https://github.com/Fresh-Donate/panel) — admin panel
-- [fresh-donate-plugin](https://github.com/Fresh-Donate/fresh-donate-plugin) — Minecraft delivery plugin
+- [fresh-donate-backend](https://github.com/Fresh-Donate/backend) - REST API this shop talks to
+- [fresh-donate-panel](https://github.com/Fresh-Donate/panel) - admin panel
+- [fresh-donate-plugin](https://github.com/Fresh-Donate/fresh-donate-plugin) - Minecraft delivery plugin
 
 ## License
 

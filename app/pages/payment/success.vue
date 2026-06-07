@@ -1,9 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
-const config = useRuntimeConfig()
+const $api = useNuxtApp().$api as typeof $fetch
 
-// Payment-status pages must not be indexed: they're per-user, time-sensitive,
-// and would clutter search results with duplicate content.
 useShopSeo({
   title: 'Статус платежа',
   description: 'Проверка статуса вашего платежа.',
@@ -18,12 +16,20 @@ const currencySymbols: Record<string, string> = {
   EUR: '€'
 }
 
+interface PaymentStatusItem {
+  productName: string
+  userSelectedCount: number
+  lineTotal: number
+}
+
 interface PaymentStatus {
   id: string
   status: string
   productName: string
   totalAmount: number
   currency: string
+  itemsCount: number
+  items: PaymentStatusItem[]
 }
 
 const payment = ref<PaymentStatus | null>(null)
@@ -73,9 +79,7 @@ async function checkStatus() {
   }
 
   try {
-    const data = await $fetch<PaymentStatus>(`/payments/${paymentId.value}/status`, {
-      baseURL: config.public.apiBase as string
-    })
+    const data = await $api<PaymentStatus>(`/payments/${paymentId.value}/status`)
     payment.value = data
 
     if (data.status !== 'pending' && pollInterval) {
@@ -108,6 +112,14 @@ const currentStatus = computed(() => {
 const symbol = computed(() => {
   if (!payment.value) return ''
   return currencySymbols[payment.value.currency] || payment.value.currency
+})
+
+const isCart = computed(() => (payment.value?.itemsCount ?? 1) > 1)
+const productLabel = computed(() => {
+  if (!payment.value) return ''
+  return isCart.value
+    ? `Заказ из ${payment.value.itemsCount} товаров`
+    : payment.value.productName
 })
 </script>
 
@@ -174,8 +186,25 @@ const symbol = computed(() => {
         <!-- Payment details -->
         <div class="mt-6 rounded-xl border border-default bg-elevated/50 p-5 text-left space-y-3">
           <div class="flex justify-between">
-            <span class="text-sm text-muted">Товар</span>
-            <span class="text-sm font-medium">{{ payment.productName }}</span>
+            <span class="text-sm text-muted">{{ isCart ? 'Заказ' : 'Товар' }}</span>
+            <span class="text-sm font-medium">{{ productLabel }}</span>
+          </div>
+          <!-- Item breakdown (cart orders) -->
+          <div
+            v-if="isCart && payment.items.length"
+            class="rounded-lg bg-default/50 p-3 space-y-1.5"
+          >
+            <div
+              v-for="(item, i) in payment.items"
+              :key="i"
+              class="flex justify-between text-xs"
+            >
+              <span class="text-muted truncate mr-2">
+                {{ item.productName }}
+                <span class="text-muted/60">× {{ item.userSelectedCount }}</span>
+              </span>
+              <span class="font-medium tabular-nums whitespace-nowrap">{{ Number(item.lineTotal).toLocaleString() }}{{ symbol }}</span>
+            </div>
           </div>
           <div class="flex justify-between">
             <span class="text-sm text-muted">Сумма</span>

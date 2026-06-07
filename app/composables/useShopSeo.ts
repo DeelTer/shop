@@ -10,7 +10,7 @@
  *   - Twitter Card
  *   - theme-color from the configured primary color
  *
- * Designed to be called from `setup` — that way the tags end up in the SSR
+ * Designed to be called from `setup` - that way the tags end up in the SSR
  * HTML payload, not just in the client DOM.
  */
 
@@ -94,7 +94,7 @@ export function useShopSeo(options: UseShopSeoOptions = {}) {
 
 /**
  * Map @nuxt/ui color tokens to a hex color for the `theme-color` meta tag.
- * Only common ones — falls back to a generic primary blue.
+ * Only common ones - falls back to a generic primary blue.
  */
 function themeColorHex(color: string): string {
   const map: Record<string, string> = {
