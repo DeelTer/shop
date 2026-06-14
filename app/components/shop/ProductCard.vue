@@ -33,15 +33,47 @@ const finalPrice = computed(() =>
 
 const finalPriceFormatted = computed(() => display(finalPrice.value, props.currency))
 const originalPriceFormatted = computed(() => display(props.price, props.currency))
+
+// Mascot — desktop only
+const { show: mascotShow, hide: mascotHide, isActive } = useMascot()
+const mascotVisible = isActive(props.id)
+
+let hoverTimer: ReturnType<typeof setTimeout> | null = null
+
+function onMouseEnter() {
+  hoverTimer = setTimeout(() => mascotShow(props.id), 300)
+}
+
+function onMouseLeave() {
+  if (hoverTimer) clearTimeout(hoverTimer)
+  mascotHide(props.id)
+}
+
+onUnmounted(() => {
+  if (hoverTimer) clearTimeout(hoverTimer)
+  mascotHide(props.id)
+})
 </script>
 
 <template>
   <div
-    class="group rounded-xl border border-default bg-elevated overflow-hidden transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer flex flex-col"
+    class="group relative rounded-xl border border-default bg-elevated overflow-visible transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer flex flex-col"
     @click="emit('addToCart', id)"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
   >
+    <!-- Mascot — appears above card, right side, pointer-events-none -->
+    <ClientOnly>
+      <div class="absolute -top-2 -right-2 z-50 translate-x-full -translate-y-1/2 pointer-events-none">
+        <ShopMascotAssistant
+          :product-name="props.name"
+          :visible="mascotVisible"
+        />
+      </div>
+    </ClientOnly>
+
     <!-- Image -->
-    <div class="relative aspect-square bg-muted/10 overflow-hidden">
+    <div class="relative aspect-square bg-muted/10 overflow-hidden rounded-t-xl">
       <img
         v-if="props.imageUrl"
         :src="props.imageUrl"

@@ -143,6 +143,30 @@ function openCheckout() {
                   />
                   ВКонтакте
                 </NuxtLink>
+                <NuxtLink
+                  to="https://www.youtube.com/@plyazhni"
+                  target="_blank"
+                  class="text-muted hover:text-default flex items-center gap-1 text-sm"
+                  aria-label="YouTube"
+                >
+                  <UIcon
+                    name="pixelarticons:external-link"
+                    class="size-3.5"
+                  />
+                  YouTube
+                </NuxtLink>
+                <NuxtLink
+                  to="https://tiktok.com/@deelter"
+                  target="_blank"
+                  class="text-muted hover:text-default flex items-center gap-1 text-sm"
+                  aria-label="TikTok"
+                >
+                  <UIcon
+                    name="pixelarticons:external-link"
+                    class="size-3.5"
+                  />
+                  TikTok
+                </NuxtLink>
               </div>
             </div>
           </div>
