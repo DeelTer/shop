@@ -230,7 +230,7 @@ async function onSubmit() {
   <UModal
     v-model:open="open"
     :ui="{
-      content: 'sm:max-w-3xl'
+      content: 'sm:max-w-4xl'
     }"
     scrollable
   >
@@ -245,9 +245,9 @@ async function onSubmit() {
         <div class="w-10 h-1 rounded-full bg-muted/40" />
       </div>
 
-      <div class="flex flex-col sm:flex-row sm:max-h-[80vh]">
+      <div class="flex flex-col sm:flex-row sm:max-h-[80vh] sm:overflow-hidden">
         <!-- Left: Product Info — hidden on mobile by default, shown as collapsed row -->
-        <div class="sm:w-72 shrink-0 sm:p-6 sm:border-b-0 sm:border-r border-default bg-elevated/50 sm:overflow-y-auto">
+        <div class="sm:w-80 shrink-0 sm:border-b-0 sm:border-r border-default bg-elevated/50 sm:overflow-y-auto">
           <!-- Mobile: compact product row -->
           <div class="flex items-center gap-3 p-4 border-b border-default sm:hidden">
             <div class="size-12 rounded-lg overflow-hidden bg-muted/10 shrink-0">
@@ -380,7 +380,7 @@ async function onSubmit() {
         </div>
 
         <!-- Right: Purchase Form -->
-        <div class="flex-1 p-6 min-w-0">
+        <div class="flex-1 p-6 min-w-0 sm:overflow-y-auto">
           <!-- Header -->
           <div class="flex items-center justify-between mb-5">
             <h2 class="text-xl font-bold">
