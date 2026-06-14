@@ -31,7 +31,7 @@ function openCheckout() {
           >
             <div class="size-8 rounded-lg bg-primary flex items-center justify-center">
               <UIcon
-                name="i-lucide-box"
+                name="i-lucide-pickaxe"
                 class="size-4 text-white"
               />
             </div>
@@ -104,7 +104,7 @@ function openCheckout() {
           <div class="flex items-center gap-3">
             <div class="size-10 rounded-lg bg-primary flex items-center justify-center">
               <UIcon
-                name="i-lucide-box"
+                name="i-lucide-pickaxe"
                 class="size-5 text-white"
               />
             </div>
@@ -118,6 +118,32 @@ function openCheckout() {
               >
                 {{ settings.description }}
               </p>
+              <div class="flex items-center gap-2 mt-1">
+                <NuxtLink
+                  to="https://t.me/communityofminers"
+                  target="_blank"
+                  class="text-muted hover:text-default flex items-center gap-1 text-sm"
+                  aria-label="Telegram"
+                >
+                  <UIcon
+                    name="i-lucide-send"
+                    class="size-3.5"
+                  />
+                  Телеграм
+                </NuxtLink>
+                <NuxtLink
+                  to="https://vk.com/community_of_miners"
+                  target="_blank"
+                  class="text-muted hover:text-default flex items-center gap-1 text-sm"
+                  aria-label="ВКонтакте"
+                >
+                  <UIcon
+                    name="i-lucide-users"
+                    class="size-3.5"
+                  />
+                  ВКонтакте
+                </NuxtLink>
+              </div>
             </div>
           </div>
 

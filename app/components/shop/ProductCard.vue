@@ -36,7 +36,10 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
 </script>
 
 <template>
-  <div class="group rounded-xl border border-default bg-elevated overflow-hidden transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
+  <div
+    class="group rounded-xl border border-default bg-elevated overflow-hidden transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+    @click="emit('addToCart', id)"
+  >
     <!-- Image -->
     <div class="relative aspect-square bg-muted/10 overflow-hidden">
       <img
@@ -107,12 +110,9 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
           </span>
           <span class="text-xs text-muted shrink-0">/ {{ props.quantity }} шт.</span>
         </div>
-        <UButton
-          icon="i-lucide-shopping-cart"
-          size="sm"
-          square
-          :aria-label="props.cartMode ? 'В корзину' : 'Купить'"
-          @click="emit('addToCart', props.id)"
+        <UIcon
+          name="i-lucide-shopping-cart"
+          class="size-4 text-muted group-hover:text-primary transition-colors"
         />
       </div>
     </div>
