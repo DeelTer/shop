@@ -233,7 +233,7 @@ async function onSubmit() {
               class="size-full flex items-center justify-center"
             >
               <UIcon
-                name="i-lucide-package"
+                name="i-pixelarticons-box"
                 class="size-20 text-muted/20"
               />
             </div>
@@ -282,7 +282,7 @@ async function onSubmit() {
 
           <div class="flex items-center gap-1.5 mt-2 text-sm text-muted">
             <UIcon
-              name="i-lucide-tag"
+              name="i-pixelarticons-tag"
               class="size-3.5"
             />
             <span>{{ typeLabels[product.type] || 'Товар' }} {{ product.name }}</span>
@@ -302,7 +302,7 @@ async function onSubmit() {
                 class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-elevated text-default border border-default"
               >
                 <UIcon
-                  name="i-lucide-server"
+                  name="i-pixelarticons-server"
                   class="size-3.5 text-primary"
                 />
                 {{ srv.name }}
@@ -331,7 +331,7 @@ async function onSubmit() {
               Оплата покупки
             </h2>
             <UButton
-              icon="i-lucide-x"
+              icon="i-pixelarticons-close"
               variant="ghost"
               color="neutral"
               size="sm"
@@ -367,15 +367,21 @@ async function onSubmit() {
           <!-- Warning -->
           <div class="flex gap-3 p-3 rounded-lg bg-warning/10 border border-warning/20 mb-5">
             <UIcon
-              name="i-lucide-triangle-alert"
+              name="i-pixelarticons-warning"
               class="size-5 text-warning shrink-0 mt-0.5"
             />
             <div>
-              <p class="text-sm font-medium text-warning">
-                Предупреждение
-              </p>
+              <div class="flex items-center gap-2">
+                <UIcon
+                  name="pixelarticons:warning-diamond"
+                  class="size-4 text-warning shrink-0"
+                />
+                <p class="text-sm font-medium text-warning">
+                  Предупреждение
+                </p>
+              </div>
               <p class="text-xs text-muted mt-0.5">
-                Некоторые товары (например блоки) могут быть выданы только если вы находитесь на сервере.
+                Некоторые товары (например, блоки) выдаются только, если вы находитесь на сервере.
               </p>
             </div>
           </div>
@@ -395,7 +401,7 @@ async function onSubmit() {
               <UInput
                 v-model="state.nickname"
                 placeholder="Введите никнейм"
-                icon="i-lucide-user"
+                icon="i-pixelarticons-user"
                 size="lg"
                 class="w-full"
               />
@@ -406,7 +412,7 @@ async function onSubmit() {
                 v-model="state.email"
                 type="email"
                 placeholder="Введите почту"
-                icon="i-lucide-mail"
+                icon="i-pixelarticons-mail"
                 size="lg"
                 class="w-full"
               />
@@ -420,7 +426,7 @@ async function onSubmit() {
                 v-model.number="state.count"
                 type="number"
                 placeholder="Введите количество"
-                icon="i-lucide-bolt"
+                icon="i-pixelarticons-zap"
                 size="lg"
                 :min="1"
                 :max="100000"
@@ -434,7 +440,7 @@ async function onSubmit() {
               class="flex gap-3 p-3 rounded-lg bg-error/10 border border-error/20 mt-1"
             >
               <UIcon
-                name="i-lucide-shield-alert"
+                name="i-pixelarticons-warning"
                 class="size-5 text-error shrink-0 mt-0.5"
               />
               <div>
@@ -457,7 +463,7 @@ async function onSubmit() {
               class="flex gap-3 p-3 rounded-lg bg-success/10 border border-success/20 mt-1"
             >
               <UIcon
-                name="i-lucide-arrow-up-right"
+                name="i-pixelarticons-arrow-up-right"
                 class="size-5 text-success shrink-0 mt-0.5"
               />
               <div>
@@ -477,7 +483,7 @@ async function onSubmit() {
               class="text-xs text-muted mt-1"
             >
               <UIcon
-                name="i-lucide-loader-circle"
+                name="i-pixelarticons-loading"
                 class="size-3.5 animate-spin inline-block mr-1"
               />
               Проверяем цену...
@@ -529,7 +535,7 @@ async function onSubmit() {
               class="!mt-5"
             >
               <label class="flex items-start gap-2.5 cursor-pointer">
-                <UCheckbox v-model="state.termsAccepted" />
+                <UCheckbox v-model="state.termsAccepted" icon="pixelarticons:check" />
                 <span class="text-xs text-muted leading-relaxed">
                   Я принимаю условия
                   <NuxtLink
@@ -539,7 +545,7 @@ async function onSubmit() {
                   <NuxtLink
                     to="/legal/offer"
                     class="text-primary hover:underline"
-                  >публичной оферты</NuxtLink>, и
+                  >публичной оферты</NuxtLink> и
                   <NuxtLink
                     to="/legal/privacy"
                     class="text-primary hover:underline"
@@ -554,7 +560,7 @@ async function onSubmit() {
               class="flex gap-3 p-3 rounded-lg bg-error/10 border border-error/20 mt-4"
             >
               <UIcon
-                name="i-lucide-alert-circle"
+                name="i-pixelarticons-alert-circle"
                 class="size-5 text-error shrink-0 mt-0.5"
               />
               <p class="text-sm text-error">
@@ -568,7 +574,7 @@ async function onSubmit() {
               class="flex gap-3 p-3 rounded-lg bg-success/10 border border-success/20 mt-4"
             >
               <UIcon
-                name="i-lucide-check-circle"
+                name="i-pixelarticons-check-square"
                 class="size-5 text-success shrink-0 mt-0.5"
               />
               <div>
@@ -586,7 +592,7 @@ async function onSubmit() {
               v-if="!purchaseResult"
               type="submit"
               label="Приобрести"
-              icon="i-lucide-shopping-cart"
+              icon="i-pixelarticons-shopping-cart"
               size="lg"
               class="w-full !mt-5"
               :loading="purchasing"

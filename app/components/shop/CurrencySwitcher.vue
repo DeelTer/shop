@@ -15,7 +15,7 @@ const items = computed(() =>
 const menuItems = computed(() => [
   items.value.map(item => ({
     label: item.label,
-    icon: currency.display === item.code ? 'i-lucide-check' : undefined,
+    icon: currency.display === item.code ? 'i-pixelarticons-check' : undefined,
     onSelect: item.onSelect
   }))
 ])
@@ -25,8 +25,8 @@ const menuItems = computed(() => [
   <UDropdownMenu :items="menuItems">
     <UButton
       :label="`${currency.display} ${CURRENCY_SYMBOLS[currency.display as SupportedCurrency]}`"
-      icon="i-lucide-globe"
-      trailing-icon="i-lucide-chevron-down"
+      icon="i-pixelarticons-globe"
+      trailing-icon="i-pixelarticons-chevron-down"
       variant="ghost"
       color="neutral"
       size="sm"

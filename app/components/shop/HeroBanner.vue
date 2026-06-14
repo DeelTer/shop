@@ -116,7 +116,7 @@ onUnmounted(() => {
 
     <div class="relative flex items-center justify-between px-8 py-12 md:py-16 pointer-events-none">
       <div class="space-y-4">
-        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white drop-shadow">
+        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white drop-shadow font-minecraft-title">
           {{ title }}
         </h1>
 
@@ -124,7 +124,7 @@ onUnmounted(() => {
         <UButton
           v-if="serverIp"
           :label="copied ? 'Скопировано!' : serverIp"
-          :icon="copied ? 'i-lucide-check' : 'i-lucide-copy'"
+          :icon="copied ? 'i-pixelarticons-check' : 'i-pixelarticons-copy'"
           variant="subtle"
           color="neutral"
           size="lg"

@@ -175,7 +175,7 @@ async function onSubmit() {
             Оформление заказа
           </h2>
           <UButton
-            icon="i-lucide-x"
+            icon="i-pixelarticons-x"
             variant="ghost"
             color="neutral"
             size="sm"
@@ -190,7 +190,7 @@ async function onSubmit() {
           class="text-center py-8"
         >
           <UIcon
-            :name="purchaseResult.status === 'delivered' ? 'i-lucide-check-circle' : 'i-lucide-clock'"
+            :name="purchaseResult.status === 'delivered' ? 'i-pixelarticons-check-circle' : 'i-pixelarticons-clock'"
             :class="purchaseResult.status === 'delivered' ? 'text-success' : 'text-info'"
             class="size-16 mx-auto"
           />
@@ -231,7 +231,7 @@ async function onSubmit() {
                   class="size-full flex items-center justify-center"
                 >
                   <UIcon
-                    name="i-lucide-package"
+                    name="i-pixelarticons-package"
                     class="size-5 text-muted/30"
                   />
                 </div>
@@ -268,7 +268,7 @@ async function onSubmit() {
                 class="flex items-center gap-1 shrink-0"
               >
                 <UButton
-                  icon="i-lucide-minus"
+                  icon="i-pixelarticons-minus"
                   size="xs"
                   variant="soft"
                   color="neutral"
@@ -278,7 +278,7 @@ async function onSubmit() {
                 />
                 <span class="w-8 text-center text-sm tabular-nums">{{ item.count }}</span>
                 <UButton
-                  icon="i-lucide-plus"
+                  icon="i-pixelarticons-plus"
                   size="xs"
                   variant="soft"
                   color="neutral"
@@ -292,7 +292,7 @@ async function onSubmit() {
               </span>
 
               <UButton
-                icon="i-lucide-trash-2"
+                icon="i-pixelarticons-trash-2"
                 size="xs"
                 variant="ghost"
                 color="error"
@@ -308,7 +308,7 @@ async function onSubmit() {
             class="flex gap-3 p-3 rounded-lg bg-error/10 border border-error/20 mb-4"
           >
             <UIcon
-              name="i-lucide-shield-alert"
+              name="i-pixelarticons-shield-alert"
               class="size-5 text-error shrink-0 mt-0.5"
             />
             <p class="text-sm text-error">
@@ -323,7 +323,7 @@ async function onSubmit() {
               <span class="text-xl font-bold text-primary tabular-nums">
                 <UIcon
                   v-if="previewLoading"
-                  name="i-lucide-loader-circle"
+                  name="i-pixelarticons-loader-circle"
                   class="size-4 animate-spin inline-block mr-1"
                 />
                 {{ displayPrice(total, cartCurrency) }}
@@ -348,7 +348,7 @@ async function onSubmit() {
               <UInput
                 v-model="state.nickname"
                 placeholder="Введите никнейм"
-                icon="i-lucide-user"
+                icon="i-pixelarticons-user"
                 size="lg"
                 class="w-full"
               />
@@ -359,7 +359,7 @@ async function onSubmit() {
                 v-model="state.email"
                 type="email"
                 placeholder="Введите почту"
-                icon="i-lucide-mail"
+                icon="i-pixelarticons-mail"
                 size="lg"
                 class="w-full"
               />
@@ -405,7 +405,7 @@ async function onSubmit() {
               class="!mt-5"
             >
               <label class="flex items-start gap-2.5 cursor-pointer">
-                <UCheckbox v-model="state.termsAccepted" />
+                <UCheckbox v-model="state.termsAccepted" icon="pixelarticons:check" />
                 <span class="text-xs text-muted leading-relaxed">
                   Я принимаю условия
                   <NuxtLink
@@ -415,7 +415,7 @@ async function onSubmit() {
                   <NuxtLink
                     to="/legal/offer"
                     class="text-primary hover:underline"
-                  >публичной оферты</NuxtLink>, и
+                  >публичной оферты</NuxtLink> и
                   <NuxtLink
                     to="/legal/privacy"
                     class="text-primary hover:underline"
@@ -430,7 +430,7 @@ async function onSubmit() {
               class="flex gap-3 p-3 rounded-lg bg-error/10 border border-error/20 mt-4"
             >
               <UIcon
-                name="i-lucide-alert-circle"
+                name="i-pixelarticons-alert-circle"
                 class="size-5 text-error shrink-0 mt-0.5"
               />
               <p class="text-sm text-error">
@@ -441,7 +441,7 @@ async function onSubmit() {
             <UButton
               type="submit"
               :label="`Оплатить ${displayPrice(total, cartCurrency)}`"
-              icon="i-lucide-shopping-cart"
+              icon="i-pixelarticons-shopping-cart"
               size="lg"
               class="w-full !mt-5"
               :loading="purchasing"

@@ -38,31 +38,31 @@ const error = ref(false)
 
 const statusConfig: Record<string, { icon: string, color: string, title: string, description: string }> = {
   delivered: {
-    icon: 'i-lucide-check-circle',
+    icon: 'i-pixelarticons-check-circle',
     color: 'text-success',
     title: 'Покупка успешна!',
     description: 'Товар был выдан. Проверьте свой инвентарь на сервере.'
   },
   paid: {
-    icon: 'i-lucide-clock',
+    icon: 'i-pixelarticons-clock',
     color: 'text-info',
     title: 'Оплата подтверждена',
     description: 'Платёж получен, товар скоро будет выдан.'
   },
   pending: {
-    icon: 'i-lucide-loader-circle',
+    icon: 'i-pixelarticons-loader-circle',
     color: 'text-warning',
     title: 'Ожидание оплаты',
     description: 'Платёж обрабатывается платёжной системой. Подождите немного...'
   },
   failed: {
-    icon: 'i-lucide-x-circle',
+    icon: 'i-pixelarticons-x-circle',
     color: 'text-error',
     title: 'Платёж не прошёл',
     description: 'Произошла ошибка при оплате. Попробуйте снова.'
   },
   expired: {
-    icon: 'i-lucide-clock-alert',
+    icon: 'i-pixelarticons-clock-alert',
     color: 'text-muted',
     title: 'Срок оплаты истёк',
     description: 'Платёжная сессия закрылась. Создайте новый платёж в магазине.'
@@ -132,7 +132,7 @@ const productLabel = computed(() => {
         class="text-center py-12"
       >
         <UIcon
-          name="i-lucide-loader-circle"
+          name="i-pixelarticons-loader-circle"
           class="size-12 animate-spin text-muted mx-auto"
         />
         <p class="text-muted mt-4">
@@ -146,7 +146,7 @@ const productLabel = computed(() => {
         class="text-center py-12"
       >
         <UIcon
-          name="i-lucide-alert-circle"
+          name="i-pixelarticons-alert-circle"
           class="size-16 text-error mx-auto"
         />
         <h2 class="text-xl font-bold mt-4">
@@ -160,7 +160,7 @@ const productLabel = computed(() => {
           label="Вернуться в магазин"
           variant="soft"
           class="mt-6"
-          icon="i-lucide-arrow-left"
+          icon="i-pixelarticons-arrow-left"
         />
       </div>
 
@@ -226,7 +226,7 @@ const productLabel = computed(() => {
           :label="payment.status === 'pending' ? 'Вернуться в магазин' : 'Продолжить покупки'"
           :variant="payment.status === 'pending' ? 'ghost' : 'soft'"
           class="mt-6"
-          :icon="payment.status === 'pending' ? 'i-lucide-arrow-left' : 'i-lucide-shopping-bag'"
+          :icon="payment.status === 'pending' ? 'i-pixelarticons-arrow-left' : 'i-pixelarticons-shopping-bag'"
         />
       </div>
     </div>

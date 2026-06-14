@@ -8,7 +8,7 @@ function escapeHtml(str: string): string {
 
 function inlineCode(str: string): string {
   return str.replace(/`([^`]+)`/g, (_, code) =>
-    `<code class="px-1 py-0.5 rounded bg-muted/30 font-mono text-xs">${escapeHtml(code)}</code>`
+    `<span class="text-primary">${escapeHtml(code)}</span>`
   )
 }
 

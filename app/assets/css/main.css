@@ -1,2 +1,28 @@
+@font-face {
+  font-family: 'Minecraft';
+  src: url('/fonts/minecraft.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Minecraft Title';
+  src: url('/fonts/minecraft_title_cyrillic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+@layer base {
+  body {
+    font-family: 'Minecraft', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .font-minecraft-title {
+    font-family: 'Minecraft Title', system-ui, sans-serif;
+  }
+}

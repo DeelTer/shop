@@ -37,7 +37,7 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
 
 <template>
   <div
-    class="group rounded-xl border border-default bg-elevated overflow-hidden transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+    class="group rounded-xl border border-default bg-elevated overflow-hidden transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer flex flex-col"
     @click="emit('addToCart', id)"
   >
     <!-- Image -->
@@ -55,7 +55,7 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
         class="size-full flex items-center justify-center"
       >
         <UIcon
-          name="i-lucide-package"
+          name="i-pixelarticons-box"
           class="size-16 text-muted/30"
         />
       </div>
@@ -76,8 +76,8 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
     </div>
 
     <!-- Info -->
-    <div class="p-4">
-      <h3 class="font-bold truncate">
+    <div class="p-4 flex flex-col flex-1">
+      <h3 class="font-bold whitespace-normal line-clamp-3 flex-1">
         {{ props.name }}
       </h3>
       <div
@@ -91,7 +91,7 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
           :title="`Выдача на сервере: ${srv.name}`"
         >
           <UIcon
-            name="i-lucide-server"
+            name="i-pixelarticons-server"
             class="size-3"
           />
           {{ srv.name }}
@@ -111,7 +111,7 @@ const originalPriceFormatted = computed(() => display(props.price, props.currenc
           <span class="text-xs text-muted shrink-0">/ {{ props.quantity }} шт.</span>
         </div>
         <UIcon
-          name="i-lucide-shopping-cart"
+          name="i-pixelarticons-shopping-cart"
           class="size-4 text-muted group-hover:text-primary transition-colors"
         />
       </div>

@@ -34,7 +34,7 @@ function checkout() {
         class="flex flex-col items-center justify-center h-full text-center px-6 py-16"
       >
         <UIcon
-          name="i-lucide-shopping-cart"
+          name="i-pixelarticons-shopping-cart"
           class="size-16 text-muted/20"
         />
         <p class="mt-4 text-muted">
@@ -64,7 +64,7 @@ function checkout() {
               class="size-full flex items-center justify-center"
             >
               <UIcon
-                name="i-lucide-package"
+                name="i-pixelarticons-package"
                 class="size-6 text-muted/30"
               />
             </div>
@@ -84,7 +84,7 @@ function checkout() {
               class="flex items-center gap-1 mt-1.5"
             >
               <UButton
-                icon="i-lucide-minus"
+                icon="i-pixelarticons-minus"
                 size="xs"
                 variant="soft"
                 color="neutral"
@@ -94,7 +94,7 @@ function checkout() {
               />
               <span class="w-8 text-center text-sm tabular-nums">{{ item.count }}</span>
               <UButton
-                icon="i-lucide-plus"
+                icon="i-pixelarticons-plus"
                 size="xs"
                 variant="soft"
                 color="neutral"
@@ -109,7 +109,7 @@ function checkout() {
               {{ displayPrice(item.price * item.count, item.currency) }}
             </span>
             <UButton
-              icon="i-lucide-trash-2"
+              icon="i-pixelarticons-trash-2"
               size="xs"
               variant="ghost"
               color="error"
@@ -134,7 +134,7 @@ function checkout() {
         </div>
         <UButton
           label="Оформить"
-          icon="i-lucide-arrow-right"
+          icon="i-pixelarticons-arrow-right"
           trailing
           size="lg"
           block

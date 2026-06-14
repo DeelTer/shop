@@ -104,21 +104,21 @@ function onProductAction(productId: string) {
     toast.add({
       title: 'Добавлено в корзину',
       description: product.name,
-      icon: 'i-lucide-shopping-cart',
+      icon: 'i-pixelarticons-shopping-cart',
       color: 'success'
     })
   } else if (result.reason === 'currency') {
     toast.add({
       title: 'Другая валюта',
       description: 'В корзине уже есть товары в другой валюте. Очистите её, чтобы добавить этот товар.',
-      icon: 'i-lucide-triangle-alert',
+      icon: 'i-pixelarticons-triangle-alert',
       color: 'warning'
     })
   } else {
     toast.add({
       title: 'Корзина заполнена',
       description: 'Можно добавить не больше 20 товаров.',
-      icon: 'i-lucide-triangle-alert',
+      icon: 'i-pixelarticons-triangle-alert',
       color: 'warning'
     })
   }
@@ -185,7 +185,7 @@ function onProductAction(productId: string) {
       class="text-center py-16"
     >
       <UIcon
-        name="i-lucide-package-x"
+        name="i-pixelarticons-package-x"
         class="size-16 text-muted/30 mx-auto"
       />
       <p class="mt-4 text-muted">

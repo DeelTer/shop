@@ -19,7 +19,7 @@ const selectedCategory = defineModel<string>('category', { default: 'all' })
     <div class="rounded-xl border border-default bg-elevated p-4">
       <div class="flex items-center gap-2 mb-3">
         <UIcon
-          name="i-lucide-server"
+          name="i-pixelarticons-server"
           class="size-4 text-muted"
         />
         <span class="text-sm font-semibold">Сервера</span>
@@ -48,7 +48,7 @@ const selectedCategory = defineModel<string>('category', { default: 'all' })
     <div class="rounded-xl border border-default bg-elevated p-4">
       <div class="flex items-center gap-2 mb-3">
         <UIcon
-          name="i-lucide-grid-2x2"
+          name="i-pixelarticons-grid"
           class="size-4 text-muted"
         />
         <span class="text-sm font-semibold">Категории</span>

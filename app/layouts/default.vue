@@ -31,7 +31,7 @@ function openCheckout() {
           >
             <div class="size-8 rounded-lg bg-primary flex items-center justify-center">
               <UIcon
-                name="i-lucide-pickaxe"
+                name="pixelarticons:sparkles"
                 class="size-4 text-white"
               />
             </div>
@@ -71,7 +71,7 @@ function openCheckout() {
                   color="primary"
                 >
                   <UIcon
-                    name="i-lucide-shopping-cart"
+                    name="i-pixelarticons-shopping-cart"
                     class="size-5"
                   />
                 </UChip>
@@ -104,7 +104,7 @@ function openCheckout() {
           <div class="flex items-center gap-3">
             <div class="size-10 rounded-lg bg-primary flex items-center justify-center">
               <UIcon
-                name="i-lucide-pickaxe"
+                name="pixelarticons:sparkles"
                 class="size-5 text-white"
               />
             </div>
@@ -126,7 +126,7 @@ function openCheckout() {
                   aria-label="Telegram"
                 >
                   <UIcon
-                    name="i-lucide-send"
+                    name="pixelarticons:external-link"
                     class="size-3.5"
                   />
                   Телеграм
@@ -138,7 +138,7 @@ function openCheckout() {
                   aria-label="ВКонтакте"
                 >
                   <UIcon
-                    name="i-lucide-users"
+                    name="pixelarticons:external-link"
                     class="size-3.5"
                   />
                   ВКонтакте
@@ -147,7 +147,7 @@ function openCheckout() {
             </div>
           </div>
 
-          <nav class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+          <nav class="flex flex-col gap-y-1 text-sm md:items-end">
             <NuxtLink
               to="/legal/offer"
               class="text-muted hover:text-default"
@@ -173,7 +173,7 @@ function openCheckout() {
         <div class="border-t border-default py-4 text-center text-sm text-muted">
           <p>&copy; {{ new Date().getFullYear() }} {{ settings.name }}. Все права защищены.</p>
           <p class="mt-1">
-            Сайт создан
+            Сайт использует
             <NuxtLink
               to="https://fd.zaralx.ru"
               target="_blank"
