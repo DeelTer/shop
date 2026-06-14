@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const cart = useCartStore()
 const settings = useShopSettingsStore()
+const legal = useLegalInfo()
 
 interface navLink {
   label: string
@@ -194,18 +195,24 @@ function openCheckout() {
         </div>
 
         <!-- Footer bottom -->
-        <div class="border-t border-default py-4 text-center text-sm text-muted">
-          <p>&copy; {{ new Date().getFullYear() }} {{ settings.name }}. Все права защищены.</p>
-          <p class="mt-1">
-            Сайт использует
-            <NuxtLink
-              to="https://fd.zaralx.ru"
-              target="_blank"
-              class="text-primary hover:underline"
-            >
-              FreshDonate
-            </NuxtLink>
-          </p>
+        <div class="border-t border-default py-4 text-sm text-muted flex items-center justify-between gap-4">
+          <div class="space-y-1">
+            <p>&copy; {{ new Date().getFullYear() }} {{ settings.name }}. Все права защищены.</p>
+            <p>
+              Сайт использует
+              <NuxtLink
+                to="https://fd.zaralx.ru"
+                target="_blank"
+                class="text-primary hover:underline"
+              >
+                FreshDonate
+              </NuxtLink>
+            </p>
+          </div>
+          <div class="text-xs text-right">
+            <p>{{ legal.ownerName.value }}</p>
+            <p>ИНН: {{ legal.ownerInn.value }}</p>
+          </div>
         </div>
       </div>
     </footer>
