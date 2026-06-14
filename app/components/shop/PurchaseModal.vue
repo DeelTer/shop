@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { z } from 'zod'
 import type { Product } from '~/stores/products'
+import { renderDescription } from '~/utils/renderDescription'
 
 const props = defineProps<{
   product: Product
@@ -213,9 +214,9 @@ async function onSubmit() {
     }"
   >
     <template #content>
-      <div class="flex flex-col sm:flex-row">
+      <div class="flex flex-col sm:flex-row sm:max-h-[80vh]">
         <!-- Left: Product Info -->
-        <div class="sm:w-72 shrink-0 p-6 border-b sm:border-b-0 sm:border-r border-default bg-elevated/50">
+        <div class="sm:w-72 shrink-0 p-6 border-b sm:border-b-0 sm:border-r border-default bg-elevated/50 overflow-y-auto">
           <!-- Image -->
           <div class="aspect-square rounded-xl overflow-hidden bg-muted/10 mb-4">
             <img
@@ -286,13 +287,6 @@ async function onSubmit() {
             <span>{{ typeLabels[product.type] || 'Товар' }} {{ product.name }}</span>
           </div>
 
-          <p
-            v-if="product.description"
-            class="text-sm text-muted mt-3 leading-relaxed"
-          >
-            {{ product.description }}
-          </p>
-
           <div
             v-if="product.servers && product.servers.length > 0"
             class="mt-3"
@@ -320,10 +314,16 @@ async function onSubmit() {
               Товар будет выдан на каждом из перечисленных серверов.
             </p>
           </div>
+
+          <div
+            v-if="product.description"
+            class="text-sm text-muted mt-3 leading-relaxed [&_h3]:text-default [&_h4]:text-default [&_h5]:text-default [&_code]:text-default"
+            v-html="renderDescription(product.description)"
+          />
         </div>
 
         <!-- Right: Purchase Form -->
-        <div class="flex-1 p-6 min-w-0">
+        <div class="flex-1 p-6 min-w-0 overflow-y-auto">
           <!-- Header -->
           <div class="flex items-center justify-between mb-5">
             <h2 class="text-xl font-bold">
