@@ -215,9 +215,39 @@ async function onSubmit() {
     scrollable
   >
     <template #content>
+      <!-- Mobile drag handle -->
+      <div class="flex justify-center pt-3 pb-1 sm:hidden">
+        <div class="w-10 h-1 rounded-full bg-muted/40" />
+      </div>
+
       <div class="flex flex-col sm:flex-row sm:max-h-[80vh]">
-        <!-- Left: Product Info -->
-        <div class="sm:w-72 shrink-0 p-6 border-b sm:border-b-0 sm:border-r border-default bg-elevated/50 overflow-y-auto">
+        <!-- Left: Product Info — hidden on mobile by default, shown as collapsed row -->
+        <div class="sm:w-72 shrink-0 sm:p-6 sm:border-b-0 sm:border-r border-default bg-elevated/50 sm:overflow-y-auto">
+          <!-- Mobile: compact product row -->
+          <div class="flex items-center gap-3 p-4 border-b border-default sm:hidden">
+            <div class="size-12 rounded-lg overflow-hidden bg-muted/10 shrink-0">
+              <img
+                v-if="product.imageUrl"
+                :src="product.imageUrl"
+                :alt="product.name"
+                loading="lazy"
+                class="size-full object-cover"
+              >
+              <div
+                v-else
+                class="size-full flex items-center justify-center"
+              >
+                <UIcon name="i-pixelarticons-box" class="size-6 text-muted/20" />
+              </div>
+            </div>
+            <div class="min-w-0">
+              <p class="font-bold text-sm truncate">{{ product.name }}</p>
+              <p class="text-primary font-bold tabular-nums">{{ displayPrice(unitPrice, product.currency) }}</p>
+            </div>
+          </div>
+
+          <!-- Desktop: full product info -->
+          <div class="hidden sm:block p-6">
           <!-- Image -->
           <div class="aspect-square rounded-xl overflow-hidden bg-muted/10 mb-4">
             <img
@@ -321,10 +351,11 @@ async function onSubmit() {
             class="text-sm text-muted mt-3 leading-relaxed [&_h3]:text-default [&_h4]:text-default [&_h5]:text-default [&_code]:text-default"
             v-html="renderDescription(product.description)"
           />
+          </div><!-- end hidden sm:block -->
         </div>
 
         <!-- Right: Purchase Form -->
-        <div class="flex-1 p-6 min-w-0 overflow-y-auto">
+        <div class="flex-1 p-6 min-w-0">
           <!-- Header -->
           <div class="flex items-center justify-between mb-5">
             <h2 class="text-xl font-bold">
