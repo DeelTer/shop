@@ -57,14 +57,14 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="group relative rounded-xl border border-default bg-elevated overflow-visible transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer flex flex-col"
+    class="group relative rounded-xl border border-default bg-elevated overflow-hidden md:overflow-visible transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer flex flex-col"
     @click="emit('addToCart', id)"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
-    <!-- Mascot — appears above card, right side, pointer-events-none -->
+    <!-- Mascot — desktop only (md+), hidden on mobile to prevent horizontal overflow -->
     <ClientOnly>
-      <div class="absolute -top-2 -right-2 z-50 translate-x-full -translate-y-1/2 pointer-events-none">
+      <div class="hidden md:block absolute -top-2 -right-2 z-50 translate-x-full -translate-y-1/2 pointer-events-none">
         <ShopMascotAssistant
           :product-name="props.name"
           :visible="mascotVisible"

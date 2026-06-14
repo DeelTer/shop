@@ -9,6 +9,26 @@ const props = defineProps<{
 
 const open = defineModel<boolean>('open', { default: false })
 
+// Swipe-to-close on mobile drag handle
+let touchStartY = 0
+let touchCurrentY = 0
+
+function onHandleTouchStart(e: TouchEvent) {
+  touchStartY = e.touches[0]!.clientY
+  touchCurrentY = touchStartY
+}
+
+function onHandleTouchMove(e: TouchEvent) {
+  touchCurrentY = e.touches[0]!.clientY
+}
+
+function onHandleTouchEnd() {
+  const delta = touchCurrentY - touchStartY
+  if (delta > 60) open.value = false
+  touchStartY = 0
+  touchCurrentY = 0
+}
+
 const { display: displayPrice, displayCurrency, format } = useCurrency()
 
 const showNative = computed(() => displayCurrency.value !== props.product.currency)
@@ -215,8 +235,13 @@ async function onSubmit() {
     scrollable
   >
     <template #content>
-      <!-- Mobile drag handle -->
-      <div class="flex justify-center pt-3 pb-1 sm:hidden">
+      <!-- Mobile drag handle — touch handlers for swipe-to-close -->
+      <div
+        class="flex justify-center pt-3 pb-1 sm:hidden touch-none"
+        @touchstart.passive="onHandleTouchStart"
+        @touchmove.passive="onHandleTouchMove"
+        @touchend.passive="onHandleTouchEnd"
+      >
         <div class="w-10 h-1 rounded-full bg-muted/40" />
       </div>
 
