@@ -9,24 +9,22 @@ const props = defineProps<{
 
 const open = defineModel<boolean>('open', { default: false })
 
-// Swipe-to-close on mobile drag handle
+// Swipe-to-close: overscroll at top triggers close (natural iOS feel)
+const contentRef = ref<HTMLElement | null>(null)
 let touchStartY = 0
-let touchCurrentY = 0
+let touchStartScrollTop = 0
 
-function onHandleTouchStart(e: TouchEvent) {
+function onContentTouchStart(e: TouchEvent) {
   touchStartY = e.touches[0]!.clientY
-  touchCurrentY = touchStartY
+  touchStartScrollTop = contentRef.value?.scrollTop ?? 0
 }
 
-function onHandleTouchMove(e: TouchEvent) {
-  touchCurrentY = e.touches[0]!.clientY
-}
-
-function onHandleTouchEnd() {
-  const delta = touchCurrentY - touchStartY
-  if (delta > 60) open.value = false
-  touchStartY = 0
-  touchCurrentY = 0
+function onContentTouchMove(e: TouchEvent) {
+  const deltaY = e.touches[0]!.clientY - touchStartY
+  // Only trigger close if: was at top when touch started, pulling down, and 80px threshold
+  if (touchStartScrollTop <= 0 && deltaY > 80) {
+    open.value = false
+  }
 }
 
 const { display: displayPrice, displayCurrency, format } = useCurrency()
@@ -235,17 +233,19 @@ async function onSubmit() {
     scrollable
   >
     <template #content>
-      <!-- Mobile drag handle — touch handlers for swipe-to-close -->
+      <!-- Scrollable wrapper — touch events for overscroll-to-close on mobile -->
       <div
-        class="flex justify-center pt-3 pb-1 sm:hidden touch-none"
-        @touchstart.passive="onHandleTouchStart"
-        @touchmove.passive="onHandleTouchMove"
-        @touchend.passive="onHandleTouchEnd"
+        ref="contentRef"
+        class="overflow-y-auto sm:overflow-visible"
+        @touchstart.passive="onContentTouchStart"
+        @touchmove.passive="onContentTouchMove"
       >
-        <div class="w-10 h-1 rounded-full bg-muted/40" />
-      </div>
+        <!-- Mobile drag handle (visual only) -->
+        <div class="flex justify-center pt-3 pb-1 sm:hidden">
+          <div class="w-10 h-1 rounded-full bg-muted/40" />
+        </div>
 
-      <div class="flex flex-col sm:flex-row sm:max-h-[80vh] sm:overflow-hidden">
+        <div class="flex flex-col sm:flex-row sm:max-h-[80vh] sm:overflow-hidden">
         <!-- Left: Product Info — hidden on mobile by default, shown as collapsed row -->
         <div class="sm:w-80 shrink-0 sm:border-b-0 sm:border-r border-default bg-elevated/50 sm:overflow-y-auto">
           <!-- Mobile: compact product row -->
@@ -665,7 +665,8 @@ async function onSubmit() {
             />
           </UForm>
         </div>
-      </div>
+        </div><!-- end sm:flex-row -->
+      </div><!-- end scrollable wrapper -->
     </template>
   </UModal>
 </template>
