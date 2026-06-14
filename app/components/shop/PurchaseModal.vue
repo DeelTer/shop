@@ -282,7 +282,7 @@ async function onSubmit() {
 
           <div class="flex items-center gap-1.5 mt-2 text-sm text-muted">
             <UIcon
-              name="i-pixelarticons-tag"
+              name="i-pixelarticons-shopping-bag"
               class="size-3.5"
             />
             <span>{{ typeLabels[product.type] || 'Товар' }} {{ product.name }}</span>
