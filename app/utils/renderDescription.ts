@@ -6,10 +6,16 @@ function escapeHtml(str: string): string {
     .replace(/"/g, '&quot;')
 }
 
-function inlineCode(str: string): string {
-  return str.replace(/`([^`]+)`/g, (_, code) =>
+function inlineMarkup(str: string): string {
+  // Links [text](url) — render before backticks so URLs with backticks aren't broken
+  str = str.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, (_, text, url) =>
+    `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="text-primary underline underline-offset-2">${escapeHtml(text)}</a>`
+  )
+  // Inline code `text`
+  str = str.replace(/`([^`]+)`/g, (_, code) =>
     `<span class="text-primary">${escapeHtml(code)}</span>`
   )
+  return str
 }
 
 export function renderDescription(raw: string): string {
@@ -33,7 +39,7 @@ export function renderDescription(raw: string): string {
       const level = headingMatch[1]!.length
       const tag = level === 1 ? 'h3' : level === 2 ? 'h4' : 'h5'
       const cls = level === 1 ? 'font-bold text-base mt-3 mb-1' : 'font-semibold text-sm mt-2 mb-0.5'
-      html.push(`<${tag} class="${cls}">${inlineCode(escapeHtml(headingMatch[2]!))}</${tag}>`)
+      html.push(`<${tag} class="${cls}">${inlineMarkup(escapeHtml(headingMatch[2]!))}</${tag}>`)
       continue
     }
 
@@ -41,7 +47,7 @@ export function renderDescription(raw: string): string {
     const ulMatch = trimmed.match(/^[*\-]\s+(.+)/)
     if (ulMatch) {
       if (!inUl) { closeList(); html.push('<ul class="list-disc pl-4 space-y-0.5 my-1">'); inUl = true }
-      html.push(`<li>${inlineCode(escapeHtml(ulMatch[1]!))}</li>`)
+      html.push(`<li>${inlineMarkup(escapeHtml(ulMatch[1]!))}</li>`)
       continue
     }
 
@@ -49,7 +55,7 @@ export function renderDescription(raw: string): string {
     const olMatch = trimmed.match(/^\d+\.\s+(.+)/)
     if (olMatch) {
       if (!inOl) { closeList(); html.push('<ol class="list-decimal pl-4 space-y-0.5 my-1">'); inOl = true }
-      html.push(`<li>${inlineCode(escapeHtml(olMatch[1]!))}</li>`)
+      html.push(`<li>${inlineMarkup(escapeHtml(olMatch[1]!))}</li>`)
       continue
     }
 
@@ -62,7 +68,7 @@ export function renderDescription(raw: string): string {
     }
 
     // Regular paragraph
-    html.push(`<p>${inlineCode(escapeHtml(trimmed))}</p>`)
+    html.push(`<p>${inlineMarkup(escapeHtml(trimmed))}</p>`)
   }
 
   closeList()

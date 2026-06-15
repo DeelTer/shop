@@ -421,25 +421,14 @@ async function onSubmit() {
           </div>
 
           <!-- Warning -->
-          <div class="flex gap-3 p-3 rounded-lg bg-warning/10 border border-warning/20 mb-5">
+          <div class="flex items-start gap-2 p-3 rounded-lg bg-warning/10 border border-warning/20 mb-5">
             <UIcon
-              name="i-pixelarticons-warning"
-              class="size-5 text-warning shrink-0 mt-0.5"
+              name="pixelarticons:warning-diamond"
+              class="size-4 text-warning shrink-0 mt-0.5"
             />
-            <div>
-              <div class="flex items-center gap-2">
-                <UIcon
-                  name="pixelarticons:warning-diamond"
-                  class="size-4 text-warning shrink-0"
-                />
-                <p class="text-sm font-medium text-warning">
-                  Предупреждение
-                </p>
-              </div>
-              <p class="text-xs text-muted mt-0.5">
-                Некоторые товары (например, блоки) выдаются только, если вы находитесь на сервере.
-              </p>
-            </div>
+            <p class="text-xs text-muted">
+              Некоторые товары (например, блоки) выдаются только если вы находитесь на сервере.
+            </p>
           </div>
 
           <!-- Form -->
@@ -570,7 +559,7 @@ async function onSubmit() {
                   v-for="method in paymentMethods"
                   :key="method.id"
                   type="button"
-                  class="flex items-center gap-2.5 p-3 rounded-lg border text-sm font-medium transition-all cursor-pointer text-left"
+                  class="flex items-center gap-2 p-3 rounded-lg border text-sm font-medium transition-all cursor-pointer text-left min-w-0"
                   :class="state.paymentOptionId === method.id
                     ? 'border-primary bg-primary/10 text-primary'
                     : 'border-default bg-elevated hover:border-muted'"
@@ -580,7 +569,7 @@ async function onSubmit() {
                     :name="method.icon"
                     class="size-4 shrink-0"
                   />
-                  <span>{{ method.label }}</span>
+                  <span class="truncate">{{ method.label }}</span>
                 </button>
               </div>
             </UFormField>
