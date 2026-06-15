@@ -67,15 +67,11 @@ export const useCurrencyStore = defineStore('currency', () => {
     cookie.value = code
   }
 
-  // Client-only one-shot: if no cookie yet, write the browser-locale guess.
-  // Triggers a single reactive update on first visit; subsequent visits read
-  // the cookie during SSR and render cleanly.
+  // Client-only one-shot: if no cookie yet, default to RUB.
+  // Auto-detection removed — VPN users would get wrong currency.
   function init() {
     if (cookie.value) return
-    const detected = detectFromBrowser()
-    if (detected && detected !== settings.baseCurrency) {
-      cookie.value = detected
-    }
+    cookie.value = 'RUB'
   }
 
   return { display, setDisplay, init }
