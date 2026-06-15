@@ -281,15 +281,14 @@ async function onSubmit() {
             @click="mobileDescExpanded = !mobileDescExpanded"
           >
             <div
-              class="relative text-xs text-muted leading-relaxed cursor-pointer select-none overflow-hidden transition-all"
+              class="relative text-xs text-muted leading-relaxed cursor-pointer select-none overflow-hidden transition-all [&_h3]:font-bold [&_h3]:text-default [&_h4]:font-semibold [&_h4]:text-default [&_code]:text-primary"
               :style="mobileDescExpanded ? {} : { maxHeight: '2.5rem' }"
-            >
-              <span>{{ product.description.replace(/\*\*|__|\*|_|`|#{1,3} /g, '') }}</span>
-              <div
-                v-if="!mobileDescExpanded"
-                class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-elevated to-transparent"
-              />
-            </div>
+              v-html="renderDescription(product.description)"
+            />
+            <div
+              v-if="!mobileDescExpanded"
+              class="h-4 -mt-4 bg-gradient-to-t from-elevated to-transparent pointer-events-none"
+            />
             <p class="text-[10px] text-muted/50 mt-0.5">
               {{ mobileDescExpanded ? 'Свернуть ↑' : 'Читать ↓' }}
             </p>
