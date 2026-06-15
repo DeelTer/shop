@@ -8,7 +8,6 @@ const props = defineProps<{
   quantity: number
   currency: string
   imageUrl?: string
-  description?: string
   activePromotions?: ProductPromotion[]
   discountPercent?: number
   discountedPrice?: number
@@ -34,14 +33,6 @@ const finalPrice = computed(() =>
 
 const finalPriceFormatted = computed(() => display(finalPrice.value, props.currency))
 const originalPriceFormatted = computed(() => display(props.price, props.currency))
-
-// Description expand/collapse — mobile only
-const descExpanded = ref(false)
-
-function toggleDesc(e: Event) {
-  e.stopPropagation()
-  descExpanded.value = !descExpanded.value
-}
 
 // Mascot — desktop only
 const { show: mascotShow, hide: mascotHide, isActive } = useMascot()
@@ -121,28 +112,6 @@ onUnmounted(() => {
       <h3 class="font-bold whitespace-normal line-clamp-3 flex-1">
         {{ props.name }}
       </h3>
-      <!-- Description — mobile only, collapsible -->
-      <div
-        v-if="props.description"
-        class="md:hidden mt-1.5"
-        @click.stop="toggleDesc"
-      >
-        <div
-          class="relative text-xs text-muted leading-relaxed cursor-pointer select-none"
-          :class="descExpanded ? '' : 'max-h-8 overflow-hidden'"
-        >
-          <span>{{ props.description.replace(/\*\*|__|\*|_|`|#{1,3}\s/g, '') }}</span>
-          <!-- Fade gradient when collapsed -->
-          <div
-            v-if="!descExpanded"
-            class="absolute bottom-0 left-0 right-0 h-5 bg-gradient-to-t from-elevated to-transparent"
-          />
-        </div>
-        <span class="text-[10px] text-muted/60 mt-0.5 block">
-          {{ descExpanded ? 'Свернуть ↑' : 'Читать ↓' }}
-        </span>
-      </div>
-
       <div
         v-if="props.servers && props.servers.length > 0"
         class="flex flex-wrap gap-1 mt-1.5"

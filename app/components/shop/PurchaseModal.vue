@@ -9,6 +9,9 @@ const props = defineProps<{
 
 const open = defineModel<boolean>('open', { default: false })
 
+const mobileDescExpanded = ref(false)
+watch(open, v => { if (!v) mobileDescExpanded.value = false })
+
 // Swipe-to-close: overscroll at top triggers close (natural iOS feel)
 const contentRef = ref<HTMLElement | null>(null)
 let touchStartY = 0
@@ -269,6 +272,27 @@ async function onSubmit() {
               <p class="font-bold text-sm truncate">{{ product.name }}</p>
               <p class="text-primary font-bold tabular-nums">{{ displayPrice(unitPrice, product.currency) }}</p>
             </div>
+          </div>
+
+          <!-- Mobile: collapsible description -->
+          <div
+            v-if="product.description"
+            class="sm:hidden px-4 pb-3"
+            @click="mobileDescExpanded = !mobileDescExpanded"
+          >
+            <div
+              class="relative text-xs text-muted leading-relaxed cursor-pointer select-none overflow-hidden transition-all"
+              :style="mobileDescExpanded ? {} : { maxHeight: '2.5rem' }"
+            >
+              <span>{{ product.description.replace(/\*\*|__|\*|_|`|#{1,3} /g, '') }}</span>
+              <div
+                v-if="!mobileDescExpanded"
+                class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-elevated to-transparent"
+              />
+            </div>
+            <p class="text-[10px] text-muted/50 mt-0.5">
+              {{ mobileDescExpanded ? 'Свернуть ↑' : 'Читать ↓' }}
+            </p>
           </div>
 
           <!-- Desktop: full product info -->

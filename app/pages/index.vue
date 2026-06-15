@@ -170,7 +170,6 @@ function onProductAction(productId: string) {
         :quantity="product.quantity"
         :currency="product.currency"
         :image-url="product.imageUrl"
-        :description="product.description"
         :active-promotions="product.activePromotions"
         :discount-percent="product.discountPercent"
         :discounted-price="product.discountedPrice"
