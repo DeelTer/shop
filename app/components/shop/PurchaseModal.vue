@@ -281,15 +281,20 @@ async function onSubmit() {
             @click="mobileDescExpanded = !mobileDescExpanded"
           >
             <div
-              class="relative text-xs text-muted leading-relaxed cursor-pointer select-none overflow-hidden transition-all [&_h3]:font-bold [&_h3]:text-default [&_h4]:font-semibold [&_h4]:text-default [&_code]:text-primary"
-              :style="mobileDescExpanded ? {} : { maxHeight: '2.5rem' }"
-              v-html="renderDescription(product.description)"
-            />
-            <div
-              v-if="!mobileDescExpanded"
-              class="h-4 -mt-4 bg-gradient-to-t from-elevated to-transparent pointer-events-none"
-            />
-            <p class="text-[10px] text-muted/50 mt-0.5">
+              class="relative cursor-pointer select-none overflow-hidden"
+              :style="mobileDescExpanded ? {} : { maxHeight: '4.5rem' }"
+            >
+              <div
+                class="text-xs text-muted leading-relaxed [&_h3]:font-bold [&_h3]:text-default [&_h4]:font-semibold [&_h4]:text-default [&_code]:text-primary"
+                v-html="renderDescription(product.description)"
+              />
+              <!-- Fade overlay — only when collapsed -->
+              <div
+                v-if="!mobileDescExpanded"
+                class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-elevated to-transparent pointer-events-none"
+              />
+            </div>
+            <p class="text-[10px] text-muted/50 mt-1">
               {{ mobileDescExpanded ? 'Свернуть ↑' : 'Читать ↓' }}
             </p>
           </div>
