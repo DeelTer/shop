@@ -83,7 +83,11 @@ const filteredProducts = computed(() => {
     selectedCategory.value === 'all' || p.type === selectedCategory.value
   )
   if (selectedCategory.value === 'all') {
-    items.sort((a, b) => (TYPE_ORDER[a.type] ?? 4) - (TYPE_ORDER[b.type] ?? 4))
+    items.sort((a, b) => {
+      const typeDiff = (TYPE_ORDER[a.type] ?? 4) - (TYPE_ORDER[b.type] ?? 4)
+      if (typeDiff !== 0) return typeDiff
+      return (b.discountPercent ?? 0) - (a.discountPercent ?? 0)
+    })
   }
   return items
 })
