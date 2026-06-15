@@ -76,10 +76,16 @@ const categories = computed(() => {
   }))
 })
 
+const TYPE_ORDER: Record<string, number> = { privilege: 0, item: 1, currency: 2, other: 3 }
+
 const filteredProducts = computed(() => {
-  return productsStore.items.filter((p) => {
-    return !(selectedCategory.value !== 'all' && p.type !== selectedCategory.value)
-  })
+  const items = productsStore.items.filter(p =>
+    selectedCategory.value === 'all' || p.type === selectedCategory.value
+  )
+  if (selectedCategory.value === 'all') {
+    items.sort((a, b) => (TYPE_ORDER[a.type] ?? 4) - (TYPE_ORDER[b.type] ?? 4))
+  }
+  return items
 })
 
 function openPurchase(productId: string) {
