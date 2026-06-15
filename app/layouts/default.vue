@@ -195,7 +195,7 @@ function openCheckout() {
         </div>
 
         <!-- Footer bottom -->
-        <div class="border-t border-default py-4 text-sm text-muted flex items-center justify-between gap-4">
+        <div class="border-t border-default py-4 text-sm text-muted opacity-50 flex items-center justify-between gap-4">
           <div class="space-y-1">
             <p>&copy; {{ new Date().getFullYear() }} {{ settings.name }}. Все права защищены.</p>
             <p>
